@@ -8,7 +8,12 @@
   </head>
 
   <body>
-    <webview id="slack" src="https://wahanda.slack.com/"></webview>
+    <webview
+      id="slack"
+      src="https://wahanda.slack.com/"
+      nodeintegration
+      preload="./script/window/preload.js"
+    ></webview>
 
     <script>
       require('./script/window/window');

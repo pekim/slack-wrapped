@@ -3,14 +3,16 @@
 require('babel/polyfill');
 require('../app-require').init();
 
-const BrowserWindow = require('remote').require('browser-window');
-
-const browserWindow = BrowserWindow.getAllWindows()[0];
-const slackWebview = document.querySelector('#slack');
-
+const remote = require('remote');
+const BrowserWindow = remote.require('browser-window');
+const notifier = require('node-notifier');
+const slackBrand = appRequire('slack-brand');
 // const globalKeyListeners = appRequire('window/global-key-listeners');
 const contextMenu = appRequire('window/action/context-menu');
 const windowState = appRequire('window/window-state');
+
+const browserWindow = BrowserWindow.getAllWindows()[0];
+const slackWebview = document.querySelector('#slack');
 
 windowState.restore();
 windowState.saveRegularly();
@@ -20,6 +22,15 @@ contextMenu.initialise();
 
 browserWindow.on('focus', () => {
   slackWebview.focus();
+});
+
+slackWebview.addEventListener('ipc-message', function(event) {
+  if (event.channel === 'notify') {
+    const options = event.args[0];
+
+    options.icon = slackBrand.stickerImagePath;
+    notifier.notify(options);
+  }
 });
 
 slackWebview.addEventListener('did-start-loading', () => {
