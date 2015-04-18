@@ -36,4 +36,9 @@ function initialise() {
   }, 500);
 }
 
+function setZoomFactor(zoomFactor) {
+  slackWebview.executeJavaScript(`document.body.style.zoom = ${zoomFactor};`);
+}
+
 exports.initialise = initialise;
+exports.setZoomFactor = setZoomFactor;

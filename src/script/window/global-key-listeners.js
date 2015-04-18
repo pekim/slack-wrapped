@@ -4,21 +4,18 @@ const addGlobalKeyListener = appRequire('keys/global-keybinding').addListener;
 
 const toggleDevTools = appRequire('window/action/toggle-devtools');
 const toggleFullScreen = appRequire('window/action/toggle-fullscreen');
-const help = appRequire('window/action/help');
+// const help = appRequire('window/action/help');
 const zoom = appRequire('window/action/zoom');
-
-const emojiShowPreference = appRequire('preference/emoji-show');
-const views = appRequire('window/views');
 
 const toggleDevToolsKeyCombination = 'F12';
 const toggleDevToolsBound = toggleDevTools.bind(null, toggleDevToolsKeyCombination);
 
 const combinations = [
-  {
-    keys       : 'CTRL + K',
-    handler    : help.open,
-    description: 'Help for keystrokes (this dialog)'
-  },
+  // {
+  //   keys       : 'CTRL + K',
+  //   handler    : help.open,
+  //   description: 'Help for keystrokes (this dialog)'
+  // },
   {
     keys       : 'F11',
     handler    : toggleFullScreen,
@@ -49,28 +46,6 @@ const combinations = [
     keys       : 'CTRL + NUMPAD_MINUS',
     handler    : zoom.out,
     description: 'Zoom out; make everything smaller'
-  },
-
-  {
-    keys       : 'CTRL + TAB',
-    handler    : views.makeNextActive,
-    description: 'Switch to next view'
-  },
-  {
-    keys       : 'CTRL + SHIFT + TAB',
-    handler    : views.makePreviousActive,
-    description: 'Switch to previous view'
-  },
-  {
-    keys       : 'ESCAPE',
-    handler    : views.toggleCommandInput,
-    description: 'Toggle active views command input'
-  },
-
-  {
-    keys       : 'CTRL + J',
-    handler    : emojiShowPreference.cycle,
-    description: 'Cycle through the emoji show variations'
   }
 ];
 
