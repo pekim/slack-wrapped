@@ -1,20 +1,28 @@
 'use strict';
-/*eslint-disable no-var */
 
-var ipc = require('ipc');
+const ipc = require('ipc');
 
-var Notifier = function(title, options) {
-  options = options || {};
+proxyNotifications();
+removeConflicts();
 
-  ipc.sendToHost('notify', {
-    title  : title,
-    message: options.body
-  });
-};
+function proxyNotifications() {
+  const Notifier = function(title, options) {
+    options = options || {};
 
-Notifier.permission = 'granted';
+    ipc.sendToHost('notify', {
+      title  : title,
+      message: options.body
+    });
+  };
 
-window.Notification = Notifier;
+  Notifier.permission = 'granted';
 
-delete window.require;
-delete window.module;
+  window.Notification = Notifier;
+}
+
+function removeConflicts() {
+  // Slack uses a module loader that conflicts with Node's.
+
+  delete window.require;
+  delete window.module;
+}
