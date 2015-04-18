@@ -1,0 +1,5 @@
+{
+  "exec": "/home/mike/atom-shell-built/atom dist",
+  "ext": "css,js,json,html",
+  "watch": "dist"
+}

@@ -1,0 +1,36 @@
+{
+  "env": {
+    "browser": true,
+    "node": true
+  },
+
+  "globals": {
+    "appRequire": true,
+    "appRootRequire": true
+  },
+
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "unicodeCodePointEscapes": true,
+    "jsx": true
+  },
+
+  "rules": {
+    "curly": [2, "all"],
+    "key-spacing": [2, { "align": "colon", "before-colon" : false }],
+    "new-cap": [2, {"capIsNewExceptions": ["List"]}],
+    "no-use-before-define": false,
+    "no-var": 2,
+    "quotes": [2, "single", "avoid-escape"],
+    "semi": [2, "always"],
+    "strict": [2, "global"]
+  }
+}
