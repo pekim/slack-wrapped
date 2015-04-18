@@ -5,6 +5,7 @@ var stylus = require('gulp-stylus');
 var nib = require('nib');
 var ignore = require('gulp-ignore');
 var config = require('../util/config');
+var postcss = require('gulp-postcss');
 
 var glob = config.path.source + 'style/**/*.styl';
 
