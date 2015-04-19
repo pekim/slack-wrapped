@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const app = require('app');
 const BrowserWindow = require('browser-window');
 
@@ -20,12 +21,10 @@ app.on('ready', function() {
   });
   mainWindow.hide();
 
-  mainWindow.loadUrl('file://' + __dirname + '/../index.html');
+  mainWindow.loadUrl('file://' + path.join(__dirname, '/../index.html'));
 
   mainWindow.on('closed', function() {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
+    // Dereference the window object.
     mainWindow = null;
   });
 });
