@@ -1,4 +1,5 @@
 'use strict';
+/* global TS */
 
 const ipc = require('ipc');
 
@@ -25,8 +26,10 @@ function proxyNotifications() {
 }
 
 function unreadCountUpdate() {
-  window.unreadCountUpdate = function(unreadCount) {
-    ipc.sendToHost('unreadCount', unreadCount);
+  window.unreadCountUpdate = function() {
+    if (TS && TS.model) {
+      ipc.sendToHost('unreadCount', TS.model.all_unread_cnt);
+    }
   };
 }
 

@@ -16,7 +16,7 @@ function initialise() {
   });
 
   notifications(slackWebview);
-  unreadCount(slackWebview);
+  unreadCount.listen(slackWebview);
 
   slackWebview.addEventListener('did-start-loading', () => {
     slackWebview.setUserAgent(navigator.userAgent);
@@ -25,6 +25,7 @@ function initialise() {
   slackWebview.addEventListener('did-finish-load', () => {
     slackWebview.focus();
     theme.inject(slackWebview);
+    unreadCount.inject(slackWebview);
   });
 
   slackWebview.addEventListener('new-window', (event) => {
