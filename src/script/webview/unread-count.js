@@ -21,7 +21,6 @@ function inject(webview) {
       return;
     }
 
-console.log(script)
     webview.executeJavaScript(script.toString());
   });
 }
