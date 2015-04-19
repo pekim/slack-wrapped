@@ -3,6 +3,7 @@
 const ipc = require('ipc');
 
 proxyNotifications();
+unreadCountUpdate();
 removeConflicts();
 
 // Electron's web Notification implementation is not pretty, and has a
@@ -21,6 +22,12 @@ function proxyNotifications() {
   Notifier.permission = 'granted';
 
   window.Notification = Notifier;
+}
+
+function unreadCountUpdate() {
+  window.unreadCountUpdate = function(unreadCount) {
+    ipc.sendToHost('unreadCount', unreadCount);
+  };
 }
 
 // Slack uses a module loader that conflicts with Node's.

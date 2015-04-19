@@ -1,0 +1,6 @@
+webview URLs
+  initial
+    "https://slack.com/signin"
+
+  boot_data.team_url
+    example : "https://wahanda.slack.com/"

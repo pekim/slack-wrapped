@@ -4,6 +4,7 @@ const remote = require('remote');
 const BrowserWindow = remote.require('browser-window');
 
 const notifications = require('./notifications');
+const unreadCount = require('./unread-count');
 const theme = require('./theme');
 
 const browserWindow = BrowserWindow.getAllWindows()[0];
@@ -15,6 +16,7 @@ function initialise() {
   });
 
   notifications(slackWebview);
+  unreadCount(slackWebview);
 
   slackWebview.addEventListener('did-start-loading', () => {
     slackWebview.setUserAgent(navigator.userAgent);
