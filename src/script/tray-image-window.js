@@ -22,10 +22,13 @@ function initialise() {
   const ipc = require('ipc');
   ipc.on('unreadCount', function(event, arg) {
     const unreadCount = arg[0];
+    const display = unreadCount > 0 ? 'block' : 'none';
 
     trayImageWindow.webContents.executeJavaScript(`
+      document.querySelector('.number').style.display = '${display}';
       document.querySelector('.number').textContent = '${unreadCount}';
     `);
+
     trayImageWindow.show();
 
     setTimeout(() => {
