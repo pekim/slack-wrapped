@@ -18,7 +18,6 @@ function initialise() {
 
   slackWebview.addEventListener('did-start-loading', () => {
     slackWebview.setUserAgent(navigator.userAgent);
-    slackWebview.openDevTools();
   });
 
   slackWebview.addEventListener('did-finish-load', () => {
@@ -40,5 +39,10 @@ function setZoomFactor(zoomFactor) {
   slackWebview.executeJavaScript(`document.body.style.zoom = ${zoomFactor};`);
 }
 
+function openDevTools() {
+  slackWebview.openDevTools();
+}
+
 exports.initialise = initialise;
+exports.openDevTools = openDevTools;
 exports.setZoomFactor = setZoomFactor;

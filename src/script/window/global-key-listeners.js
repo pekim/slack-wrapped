@@ -6,16 +6,12 @@ const toggleDevTools = appRequire('window/action/toggle-devtools');
 const toggleFullScreen = appRequire('window/action/toggle-fullscreen');
 // const help = appRequire('window/action/help');
 const zoom = appRequire('window/action/zoom');
+const slackWebview = appRequire('webview/slack-webview');
 
 const toggleDevToolsKeyCombination = 'F12';
 const toggleDevToolsBound = toggleDevTools.bind(null, toggleDevToolsKeyCombination);
 
 const combinations = [
-  // {
-  //   keys       : 'CTRL + K',
-  //   handler    : help.open,
-  //   description: 'Help for keystrokes (this dialog)'
-  // },
   {
     keys       : 'F11',
     handler    : toggleFullScreen,
@@ -24,6 +20,11 @@ const combinations = [
   {
     keys       : 'F12',
     handler    : toggleDevToolsBound,
+    description: 'Toggle (Open/Close) Dev Tools'
+  },
+  {
+    keys       : 'CTRL + F12',
+    handler    : slackWebview.openDevTools,
     description: 'Toggle (Open/Close) Dev Tools'
   },
   {
