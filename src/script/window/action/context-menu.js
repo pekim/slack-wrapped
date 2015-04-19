@@ -16,17 +16,15 @@ function initialise() {
   }));
 
   menu.append(new MenuItem({
-    accelerator: 'F12',
-    label      : 'Open devtools',
-    click      : openDevTools
+    label: 'Open devtools',
+    click: openDevTools
   }));
 
   menu.append(new MenuItem({ type: 'separator' }));
 
   menu.append(new MenuItem({
-    accelerator: 'Ctrl+F12',
-    label      : 'Open webview devtools',
-    click      : slackWebview.openDevTools
+    label: 'Open webview devtools',
+    click: slackWebview.openDevTools
   }));
 
   window.addEventListener('contextmenu', function (event) {
