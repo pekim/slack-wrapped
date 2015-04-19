@@ -1,24 +1,28 @@
 'use strict';
 
-const webFrame = require('web-frame');
+// const webFrame = require('web-frame');
 const webview = appRequire('webview/slack-webview');
 
+let zoomFactor = 1;
 const delta = 0.05;
 
 function zoomIn() {
-  setZoomFactor(webFrame.getZoomFactor() + delta);
+  zoomFactor += delta;
+  setZoomFactor();
 }
 
 function zoomOut() {
-  setZoomFactor(webFrame.getZoomFactor() - delta);
+  zoomFactor -= delta;
+  setZoomFactor();
 }
 
 function zoomDefault() {
-  setZoomFactor(1);
+  zoomFactor = 1;
+  setZoomFactor();
 }
 
-function setZoomFactor(zoomFactor) {
-  webFrame.setZoomFactor(zoomFactor);
+function setZoomFactor() {
+  // webFrame.setZoomFactor(zoomFactor);
   webview.setZoomFactor(zoomFactor);
 }
 
