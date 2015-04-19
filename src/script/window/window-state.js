@@ -8,6 +8,8 @@ function restore() {
   const browserWindow = BrowserWindow.getAllWindows()[0];
   const windowSize = JSON.parse(localStorage.getItem(KEY));
 
+  browserWindow.show();
+
   if (windowSize) {
     browserWindow.setPosition(...windowSize.position);
     browserWindow.setSize(...windowSize.size);
@@ -19,8 +21,6 @@ function restore() {
     browserWindow.setSize(800, 600);
     browserWindow.center();
   }
-
-  browserWindow.show();
 }
 
 function saveRegularly() {
