@@ -4,3 +4,7 @@ webview URLs
 
   boot_data.team_url
     example : "https://wahanda.slack.com/"
+
+image with badge
+  http://lab.ejci.net/favico.js/
+  https://github.com/ejci/favico.js/blob/master/favico.js
