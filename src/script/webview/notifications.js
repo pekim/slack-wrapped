@@ -9,6 +9,8 @@ module.exports = function(webview) {
       const options = event.args[0];
 
       options.icon = slackBrand.stickerImagePath;
+      options.hint = 'int:transient:1';
+
       notifier.notify(options);
     }
   });
