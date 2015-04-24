@@ -7,17 +7,11 @@ proxyNotifications();
 unreadCountUpdate();
 removeConflicts();
 
-// Electron's web Notification implementation is not pretty, and has a
-// weird 'view' button (at least on Ubuntu). So intercept notifications
-// and have them handled in the hosting window (which uses node-notifier).
+// intercept notifications and have them handled in the hosting window
+// where an icon can be added.
 function proxyNotifications() {
   const Notifier = function(title, options) {
-    options = options || {};
-
-    ipc.sendToHost('notify', {
-      title  : title,
-      message: options.body
-    });
+    ipc.sendToHost('notify', title, options);
   };
 
   Notifier.permission = 'granted';

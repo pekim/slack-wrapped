@@ -1,4 +1,4 @@
-webview URLs
+webview URLs - for team signin support
   initial
     "https://slack.com/signin"
 
@@ -8,3 +8,28 @@ webview URLs
 image with badge
   http://lab.ejci.net/favico.js/
   https://github.com/ejci/favico.js/blob/master/favico.js
+
+about dialog
+  name
+  versions
+    slack-wrapped
+    electron
+    node
+    chrome
+    v8
+  icon
+  slack disclaimer
+
+theme selection
+  none (default)
+  dark
+  custom
+
+package
+  linux
+  max
+  windows
+
+  docker
+    image
+    shell script to run and expose to X

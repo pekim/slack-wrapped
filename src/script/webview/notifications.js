@@ -1,17 +1,16 @@
 'use strict';
-
-const notifier = require('node-notifier');
 const slackBrand = appRequire('slack-brand');
 
 module.exports = function(webview) {
   webview.addEventListener('ipc-message', function(event) {
     if (event.channel === 'notify') {
-      const options = event.args[0];
+      const title = event.args[0];
+      const options = event.args[1] || {};
 
       options.icon = slackBrand.stickerImagePath;
-      options.hint = 'int:transient:1';
 
-      notifier.notify(options);
+      /* eslint-disable no-new */
+      new Notification(title, options);
     }
   });
 };
