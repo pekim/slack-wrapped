@@ -8,6 +8,10 @@
 (function() {
   var sig;
 
+  if (!window.TS) {
+    return;
+  }
+
   if (TS.channels) {
     sig = TS.channels.unread_changed_sig; if (sig) { sig.add(unreadCountUpdate); }
     sig = TS.channels.unread_highlight_changed_sig; if (sig) { sig.add(unreadCountUpdate); }

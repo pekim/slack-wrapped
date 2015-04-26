@@ -5,18 +5,22 @@ const BrowserWindow = remote.require('browser-window');
 
 const notifications = require('./notifications');
 const unreadCount = require('./unread-count');
+const teamUrl = require('./team-url');
 const theme = require('./theme');
 
 const browserWindow = BrowserWindow.getAllWindows()[0];
-const slackWebview = document.querySelector('#slack');
+let slackWebview;
 
-function initialise() {
+function initialise(webview) {
+  slackWebview = webview;
+
   browserWindow.on('focus', () => {
     slackWebview.focus();
   });
 
   notifications(slackWebview);
   unreadCount.listen(slackWebview);
+  teamUrl.listen(slackWebview);
 
   slackWebview.addEventListener('did-start-loading', () => {
     slackWebview.setUserAgent(navigator.userAgent);
