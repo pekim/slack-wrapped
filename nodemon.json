@@ -1,5 +1,5 @@
 {
-  "exec": "/home/mike/electron/latest/electron dist",
+  "exec": "electron dist",
   "ext": "css,js,json,html",
   "watch": "dist"
 }
