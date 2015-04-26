@@ -4,12 +4,19 @@ const fs = require('fs');
 const path = require('path');
 const ipc = require('ipc');
 
+const TrayImage = appRequire('tray/tray-image');
+
 const scriptPath = path.join(__dirname, 'slack-unread-count-monitor.js');
 
 function listen(webview) {
   webview.addEventListener('ipc-message', function(event) {
     if (event.channel === 'unreadCount') {
-      ipc.send('unreadCount', event.args);
+      const unreadCount = event.args[0];
+      const trayImage = new TrayImage(64, unreadCount);
+
+      trayImage.getData((imageData) => {
+        ipc.send('trayImage', imageData);
+      });
     }
   });
 }

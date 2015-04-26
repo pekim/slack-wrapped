@@ -5,7 +5,7 @@ const app = require('app');
 const BrowserWindow = require('browser-window');
 
 const slackBrand = require('./slack-brand');
-const trayImageWindow = require('./tray-image-window');
+const tray = require('./tray/tray');
 
 // Keep a global reference of the window object, otherwise will be GCed.
 let mainWindow = null;
@@ -29,5 +29,5 @@ app.on('ready', function() {
     mainWindow = null;
   });
 
-  trayImageWindow.initialise();
+  tray.initialise();
 });
