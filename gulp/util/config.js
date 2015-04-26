@@ -3,6 +3,6 @@
 module.exports = {
   path: {
     source: 'src/',
-    dest: 'dist/'
+    dest  : 'build/'
   }
 };

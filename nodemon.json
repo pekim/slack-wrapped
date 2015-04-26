@@ -1,5 +1,5 @@
 {
-  "exec": "electron dist",
+  "exec": "electron build",
   "ext": "css,js,json,html",
-  "watch": "dist"
+  "watch": "build"
 }
