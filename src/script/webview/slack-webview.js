@@ -46,10 +46,15 @@ function setZoomFactor(zoomFactor) {
   slackWebview.executeJavaScript(`document.body.style.zoom = ${zoomFactor};`);
 }
 
+function inspectElement(x, y) {
+  slackWebview.inspectElement(x, y);
+}
+
 function openDevTools() {
   slackWebview.openDevTools();
 }
 
 exports.initialise = initialise;
 exports.openDevTools = openDevTools;
+exports.inspectElement = inspectElement;
 exports.setZoomFactor = setZoomFactor;

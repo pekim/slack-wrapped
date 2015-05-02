@@ -1,3 +1,10 @@
+electron 0.25.2
+
+inspect webview item on context menu
+
+depend on electron-prebuilt ?
+  use in npm start
+
 about dialog
   name
   versions
@@ -8,6 +15,13 @@ about dialog
     v8
   icon
   slack disclaimer
+
+menu for tray icon
+  open
+  quite
+
+  implication
+    closing window would not quite app
 
 theme selection
   none (default)

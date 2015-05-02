@@ -11,19 +11,24 @@ function initialise() {
   const menu = new Menu();
 
   menu.append(new MenuItem({
-    label: 'Inspect element',
+    label: 'window - Inspect element',
     click: inspectElement
   }));
 
   menu.append(new MenuItem({
-    label: 'Open devtools',
+    label: 'window - Open devtools',
     click: openDevTools
   }));
 
   menu.append(new MenuItem({ type: 'separator' }));
 
   menu.append(new MenuItem({
-    label: 'Open webview devtools',
+    label: 'webview - Inspect element',
+    click: () => slackWebview.inspectElement(popupOpenEvent.clientX, popupOpenEvent.clientY)
+  }));
+
+  menu.append(new MenuItem({
+    label: 'webview - Open devtools',
     click: slackWebview.openDevTools
   }));
 
