@@ -3,50 +3,55 @@
 const remote = require('remote');
 const Menu = remote.require('menu');
 const MenuItem = remote.require('menu-item');
-const slackWebview = appRequire('webview/slack-webview');
 
-let popupOpenEvent;
+class ContextMenu {
+  constructor() {
+    document.addEventListener('mousemove', (event) => {
+      this.mouseX = event.clientX;
+      this.mouseY = event.clientY;
+    });
 
-function initialise() {
-  const menu = new Menu();
+    this.menu = new Menu();
 
-  menu.append(new MenuItem({
-    label: 'window - Inspect element',
-    click: inspectElement
-  }));
+    this.menu.append(new MenuItem({
+      label: 'window - Inspect element',
+      click: () => this.inspectElement()
+    }));
 
-  menu.append(new MenuItem({
-    label: 'window - Open devtools',
-    click: openDevTools
-  }));
+    this.menu.append(new MenuItem({
+      label: 'window - Open devtools',
+      click: () => this.openDevTools()
+    }));
 
-  menu.append(new MenuItem({ type: 'separator' }));
+    this.menu.append(new MenuItem({ type: 'separator' }));
 
-  menu.append(new MenuItem({
-    label: 'webview - Inspect element',
-    click: () => slackWebview.inspectElement(popupOpenEvent.clientX, popupOpenEvent.clientY)
-  }));
+    this.menu.append(new MenuItem({
+      label: 'webview - Inspect element',
+      click: () => this.openOptions.webviewInspectElement()
+    }));
 
-  menu.append(new MenuItem({
-    label: 'webview - Open devtools',
-    click: slackWebview.openDevTools
-  }));
+    this.menu.append(new MenuItem({
+      label: 'webview - Open devtools',
+      click: () => this.openOptions.webviewOpenDevTools()
+    }));
+  }
 
-  window.addEventListener('contextmenu', function (event) {
-    event.preventDefault();
-    popupOpenEvent = event;
-    menu.popup(remote.getCurrentWindow());
-  }, false);
+  inspectElement() {
+    this.currentWindow().inspectElement(this.mouseX, this.mouseY);
+  }
+
+  openDevTools() {
+    this.currentWindow().openDevTools();
+  }
+
+  currentWindow() {
+    return remote.getCurrentWindow();
+  }
+
+  open(openOptions) {
+    this.openOptions = openOptions;
+    this.menu.popup(remote.getCurrentWindow());
+  }
 }
 
-function inspectElement() {
-  const browserWindow = remote.getCurrentWindow();
-  browserWindow.inspectElement(popupOpenEvent.clientX, popupOpenEvent.clientY);
-}
-
-function openDevTools() {
-  const browserWindow = remote.getCurrentWindow();
-  browserWindow.openDevTools();
-}
-
-exports.initialise = initialise;
+module.exports = ContextMenu;

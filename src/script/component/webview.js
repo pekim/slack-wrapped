@@ -21,7 +21,10 @@ const Webview = React.createClass({
     `};
 
     return (
-      <div className="webview-container" dangerouslySetInnerHTML={markup} />
+      <div
+        className="webview-container"
+        dangerouslySetInnerHTML={markup}
+      />
     );
   }
 });

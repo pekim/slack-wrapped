@@ -7,12 +7,26 @@ const notifications = require('./notifications');
 const unreadCount = require('./unread-count');
 const teamUrl = require('./team-url');
 const theme = require('./theme');
+const ContextMenu = appRequire('window/action/context-menu');
 
 const browserWindow = BrowserWindow.getAllWindows()[0];
+
+const contextMenu = new ContextMenu();
 let slackWebview;
 
 function initialise(webview) {
   slackWebview = webview;
+
+  slackWebview.addEventListener('ipc-message', function(event) {
+    if (event.channel === 'contextmenu') {
+      const {x, y} = event.args[0];
+
+      contextMenu.open({
+        webviewInspectElement: () => slackWebview.inspectElement(x, y),
+        webviewOpenDevTools  : () => slackWebview.openDevTools()
+      });
+    }
+  });
 
   browserWindow.on('focus', () => {
     slackWebview.focus();
@@ -46,15 +60,5 @@ function setZoomFactor(zoomFactor) {
   slackWebview.executeJavaScript(`document.body.style.zoom = ${zoomFactor};`);
 }
 
-function inspectElement(x, y) {
-  slackWebview.inspectElement(x, y);
-}
-
-function openDevTools() {
-  slackWebview.openDevTools();
-}
-
 exports.initialise = initialise;
-exports.openDevTools = openDevTools;
-exports.inspectElement = inspectElement;
 exports.setZoomFactor = setZoomFactor;

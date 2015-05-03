@@ -6,6 +6,7 @@ const ipc = require('ipc');
 proxyNotifications();
 unreadCountUpdate();
 monitorTeamUrl();
+contextMenuListener();
 removeConflicts();
 
 // intercept notifications and have them handled in the hosting window
@@ -34,12 +35,20 @@ function monitorTeamUrl() {
   setInterval(() => {
     if (window.TS && TS.boot_data && TS.boot_data.team_url) {
       if (TS.boot_data.team_url !== teamUrl) {
-        console.log(TS.boot_data.team_url);
         ipc.sendToHost('teamUrl', TS.boot_data.team_url);
         teamUrl = TS.boot_data.team_url;
       }
     }
   }, 2000);
+}
+
+function contextMenuListener() {
+  document.addEventListener('contextmenu', (event) => {
+    ipc.sendToHost('contextmenu', {
+      x: event.pageX,
+      y: event.pageY
+    });
+  });
 }
 
 // Slack uses a module loader that conflicts with Node's.
