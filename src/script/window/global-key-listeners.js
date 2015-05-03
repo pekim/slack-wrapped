@@ -4,14 +4,24 @@ const addGlobalKeyListener = appRequire('keys/global-keybinding').addListener;
 
 const toggleDevTools = appRequire('window/action/toggle-devtools');
 const toggleFullScreen = appRequire('window/action/toggle-fullscreen');
-// const help = appRequire('window/action/help');
+const popup = appRequire('window/action/popup');
 const zoom = appRequire('window/action/zoom');
-const slackWebview = appRequire('webview/slack-webview');
+// const slackWebview = appRequire('webview/slack-webview');
 
 const toggleDevToolsKeyCombination = 'F12';
 const toggleDevToolsBound = toggleDevTools.bind(null, toggleDevToolsKeyCombination);
 
 const combinations = [
+  {
+    keys       : 'ESCAPE',
+    handler    : popup.close,
+    description: 'Close popup'
+  },
+  {
+    keys       : 'F1',
+    handler    : popup.toggleAbout,
+    description: 'Help'
+  },
   {
     keys       : 'F11',
     handler    : toggleFullScreen,
@@ -22,11 +32,11 @@ const combinations = [
     handler    : toggleDevToolsBound,
     description: 'Toggle (Open/Close) Dev Tools'
   },
-  {
-    keys       : 'CTRL + F12',
-    handler    : slackWebview.openDevTools,
-    description: 'Toggle (Open/Close) Dev Tools'
-  },
+  // {
+  //   keys       : 'CTRL + F12',
+  //   handler    : slackWebview.openDevTools,
+  //   description: 'Toggle (Open/Close) Dev Tools'
+  // },
   {
     keys       : 'CTRL + R',
     handler    : window.location.reload.bind(window.location, true),

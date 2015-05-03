@@ -3,6 +3,7 @@
 const remote = require('remote');
 const Menu = remote.require('menu');
 const MenuItem = remote.require('menu-item');
+const popup = appRequire('window/action/popup');
 const clipboard = remote.require('clipboard');
 const shell = require('shell');
 
@@ -16,6 +17,13 @@ class ContextMenu {
 
   open(options) {
     this.menu = new Menu();
+
+    this.menu.append(new MenuItem({
+      label: 'About',
+      click: popup.toggleAbout
+    }));
+
+    this.menu.append(new MenuItem({ type: 'separator' }));
 
     if (options.url) {
       this.menu.append(new MenuItem({

@@ -12,6 +12,7 @@
     "gulp-ignore": "^1.2.1",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-stylus": "^2.0.1",
+    "immutable": "^3.7.2",
     "lodash": "^3.7.0",
     "merge-stream": "^0.1.7",
     "nib": "^1.1.0",
