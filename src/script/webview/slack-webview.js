@@ -2,6 +2,7 @@
 
 const remote = require('remote');
 const BrowserWindow = remote.require('browser-window');
+const shell = require('shell');
 
 const notifications = require('./notifications');
 const unreadCount = require('./unread-count');
@@ -19,9 +20,10 @@ function initialise(webview) {
 
   slackWebview.addEventListener('ipc-message', function(event) {
     if (event.channel === 'contextmenu') {
-      const {x, y} = event.args[0];
+      const {targetUrl, x, y} = event.args[0];
 
       contextMenu.open({
+        url                  : targetUrl,
         webviewInspectElement: () => slackWebview.inspectElement(x, y),
         webviewOpenDevTools  : () => slackWebview.openDevTools()
       });
@@ -48,7 +50,7 @@ function initialise(webview) {
 
   slackWebview.addEventListener('new-window', (event) => {
     event.preventDefault();
-    require('shell').openExternal(event.url);
+    shell.openExternal(event.url);
   });
 
   setInterval(() => {

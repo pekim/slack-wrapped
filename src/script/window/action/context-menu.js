@@ -3,6 +3,8 @@
 const remote = require('remote');
 const Menu = remote.require('menu');
 const MenuItem = remote.require('menu-item');
+const clipboard = remote.require('clipboard');
+const shell = require('shell');
 
 class ContextMenu {
   constructor() {
@@ -10,8 +12,24 @@ class ContextMenu {
       this.mouseX = event.clientX;
       this.mouseY = event.clientY;
     });
+  }
 
+  open(options) {
     this.menu = new Menu();
+
+    if (options.url) {
+      this.menu.append(new MenuItem({
+        label: 'Open link in browser',
+        click: () => shell.openExternal(options.url)
+      }));
+
+      this.menu.append(new MenuItem({
+        label: 'Copy link address',
+        click: () => clipboard.writeText(options.url)
+      }));
+
+      this.menu.append(new MenuItem({ type: 'separator' }));
+    }
 
     this.menu.append(new MenuItem({
       label: 'window - Inspect element',
@@ -27,13 +45,15 @@ class ContextMenu {
 
     this.menu.append(new MenuItem({
       label: 'webview - Inspect element',
-      click: () => this.openOptions.webviewInspectElement()
+      click: () => options.webviewInspectElement()
     }));
 
     this.menu.append(new MenuItem({
       label: 'webview - Open devtools',
-      click: () => this.openOptions.webviewOpenDevTools()
+      click: () => options.webviewOpenDevTools()
     }));
+
+    this.menu.popup(remote.getCurrentWindow());
   }
 
   inspectElement() {
@@ -46,11 +66,6 @@ class ContextMenu {
 
   currentWindow() {
     return remote.getCurrentWindow();
-  }
-
-  open(openOptions) {
-    this.openOptions = openOptions;
-    this.menu.popup(remote.getCurrentWindow());
   }
 }
 

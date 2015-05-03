@@ -44,9 +44,13 @@ function monitorTeamUrl() {
 
 function contextMenuListener() {
   document.addEventListener('contextmenu', (event) => {
+    const node = event.target;
+    const targetUrl = node.nodeName === 'A' ? node.href : null;
+
     ipc.sendToHost('contextmenu', {
-      x: event.pageX,
-      y: event.pageY
+      targetUrl: targetUrl,
+      x        : event.pageX,
+      y        : event.pageY
     });
   });
 }
