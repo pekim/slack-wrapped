@@ -1,10 +1,13 @@
 'use strict';
 
 const React = require('react');
+const ContextMenu = appRequire('window/action/context-menu');
 const popup = appRequire('window/action/popup');
 const packageData = appRootRequire('package.json');
 const slackBrand = appRequire('slack-brand');
 const keycode = appRequire('keys/keycode');
+
+const contextMenu = new ContextMenu();
 
 const Help = React.createClass({
   onClick: function() {
@@ -17,13 +20,20 @@ const Help = React.createClass({
     }
   },
 
+  onContextMenu: function() {
+    contextMenu.open();
+  },
+
   componentDidMount: function() {
     React.findDOMNode(this).focus();
   },
 
   render: function() {
     return (
-      <div className="popup" tabIndex="1" onKeyDown={this.onKeyDown}>
+      <div className="popup" tabIndex="1"
+          onKeyDown={this.onKeyDown}
+          onContextMenu={this.onContextMenu}
+      >
         <div className="overlay" onClick={this.onClick}/>
         <div className="popup-content about">
           {this.renderApp()}

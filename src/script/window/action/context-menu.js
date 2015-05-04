@@ -16,6 +16,8 @@ class ContextMenu {
   }
 
   open(options) {
+    options = options || {};
+
     this.menu = new Menu();
 
     this.menu.append(new MenuItem({
@@ -49,17 +51,23 @@ class ContextMenu {
       click: () => this.openDevTools()
     }));
 
-    this.menu.append(new MenuItem({ type: 'separator' }));
+    if (options.webviewInspectElement || options.webviewOpenDevTools) {
+      this.menu.append(new MenuItem({ type: 'separator' }));
+    }
 
-    this.menu.append(new MenuItem({
-      label: 'webview - Inspect element',
-      click: () => options.webviewInspectElement()
-    }));
+    if (options.webviewInspectElement) {
+      this.menu.append(new MenuItem({
+        label: 'webview - Inspect element',
+        click: () => options.webviewInspectElement()
+      }));
+    }
 
-    this.menu.append(new MenuItem({
-      label: 'webview - Open devtools',
-      click: () => options.webviewOpenDevTools()
-    }));
+    if (options.webviewOpenDevTools) {
+      this.menu.append(new MenuItem({
+        label: 'webview - Open devtools',
+        click: () => options.webviewOpenDevTools()
+      }));
+    }
 
     this.menu.popup(remote.getCurrentWindow());
   }
