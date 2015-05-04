@@ -34,14 +34,18 @@ const Help = React.createClass({
 
   renderVersions: function() {
     return [
-      ['atom shell', 'atom-shell'],
       ['chrome', 'chrome'],
-      ['node', 'node'],
+      ['electron', 'electron'],
+      ['io.js', 'node'],
       ['v8', 'v8']
-    ].map((version, index) => {
+    ].map((product, index) => {
+      const [label, productName] = product;
+      const version = process.versions[productName];
+
       return (
-        <div key={index} className="version">
-          {version[0]} : {process.versions[version[1]]}
+        <div key={index} className="product-version">
+          <span className="label">{label}</span>
+          <span className="version">{version}</span>
         </div>
       );
     });
