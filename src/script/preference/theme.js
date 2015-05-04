@@ -2,21 +2,23 @@
 
 const app = require('remote').require('app');
 const async = require('async');
+const cssParse = require('css').parse;
+const EventEmitter = require('events').EventEmitter;
 const fs = require('fs');
 const path = require('path');
 const Immutable = require('immutable');
 const data = appRequire('data/data');
 const appPath = appRequire('app-path');
-const availableCommands = appRequire('command/available-commands');
 
+const eventEmitter = new EventEmitter();
+const defaultThemeId = 'builtin-Default';
 const localStorageKey = 'theme';
-const preferenceKey = 'theme';
 
 const builtinThemePath = appPath('style/theme');
 const userThemePath = path.join(app.getPath('userData'), 'theme');
 
 function get() {
-  return localStorage.getItem(localStorageKey) || 'light';
+  return localStorage.getItem(localStorageKey);
 }
 
 function getPath(theme, cb) {
@@ -40,40 +42,90 @@ function getPath(theme, cb) {
   });
 }
 
-function set(themeName) {
-  getPath(themeName, (err, themePath) => {
-    if (themePath) {
-      data.getIn(['preferences']).set(preferenceKey, themePath);
-      localStorage.setItem(localStorageKey, themeName);
-    } else {
-      console.warn(err);
-    }
-  });
+function set(themeId) {
+  localStorage.setItem(localStorageKey, themeId);
+  data.getIn([]).setIn(['theme', 'active'], themeId);
+  eventEmitter.emit('change-active');
 }
 
 function setAvailableThemes() {
   async.parallel([
-    readdir(builtinThemePath),
-    readdir(userThemePath)
-  ], (err, results) => {
+    (callback) => {
+      setAvailableThemesForType('builtin', builtinThemePath, callback);
+    },
+    (callback) => {
+      setAvailableThemesForType('user', userThemePath, callback);
+    }
+  ], () => {
+    data.getIn([]).setIn(['theme', 'active'], get() || defaultThemeId);
+    eventEmitter.emit('change-active');
+  });
+
+}
+
+function setAvailableThemesForType(themeType, directory, callback1) {
+  fs.readdir(directory, (err, filenames) => {
     if (err) {
-      console.error(`Failed to find available themes`, err);
+      if (err.code === 'ENOENT') {
+        console.info(`No theme directory ${directory}`);
+      } else {
+        console.error(`Failed to find available themes`, err);
+      }
+
+      callback1();
       return;
     }
 
-    const filenames = results[0].concat.apply(results[0], results[1]);
     const availableThemes = filenames
-      .filter(filename => filename.endsWith('.css'))
-      .map(filename => filename.slice(0, -'.css'.length));
+      .filter(filename => filename.endsWith('.css'));
 
-    data.getIn([]).set('themes', Immutable.fromJS(availableThemes));
-    availableCommands.update();
+    async.map(availableThemes, processTheme, (err, themes) => {
+      if (err) {
+        console.error(`Failed to process themes`, err);
+        return;
+      }
+
+      data.getIn([]).setIn(['theme', themeType], Immutable.fromJS(themes));
+      callback1();
+    });
   });
 
-  function readdir(dirpath) {
-    return function(callback) {
-      fs.readdir(dirpath, callback);
-    };
+  function processTheme(filename, callback) {
+    fs.readFile(path.join(directory, filename), (err, cssBuffer) => {
+      if (err) {
+        callback(err);
+        return;
+      }
+
+      const cssString = cssBuffer.toString();
+      const cssParsed = cssParse(cssString);
+      const metaDataRule = cssParsed.stylesheet.rules.find((rule) => {
+        return rule.type === 'rule' &&
+          rule.selectors.find((selector) => {
+            return selector === '.slack-wrapped-theme-meta';
+          });
+      }) || {
+        declarations: []
+      };
+      const name = getRuleDeclarationValue(metaDataRule, 'name');
+      const description = getRuleDeclarationValue(metaDataRule, 'description');
+
+      callback(null, {
+        id         : `${themeType}-${name}`,
+        name       : name,
+        filename   : filename,
+        description: description,
+        css        : cssString
+      });
+    });
+
+    function getRuleDeclarationValue(rule, name) {
+      const declaration = rule.declarations.find((declaration) => {
+        return declaration.property === name;
+      });
+
+      return (declaration || {}).value;
+    }
   }
 }
 
@@ -82,12 +134,13 @@ function watchUserThemes() {
 }
 
 function initialise() {
-  set(get());
+  // set(get());
+
+  // watchUserThemes();
 
   setAvailableThemes();
-  watchUserThemes();
 }
 
-initialise();
-
+exports.initialise = initialise;
 exports.set = set;
+exports.ee = eventEmitter;

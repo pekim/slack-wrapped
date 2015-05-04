@@ -9,6 +9,7 @@ const unreadCount = require('./unread-count');
 const teamUrl = require('./team-url');
 const theme = require('./theme');
 const ContextMenu = appRequire('window/action/context-menu');
+const preferenceTheme = appRequire('preference/theme');
 
 const browserWindow = BrowserWindow.getAllWindows()[0];
 
@@ -46,6 +47,10 @@ function initialise(webview) {
     focus();
     theme.inject(slackWebview);
     unreadCount.inject(slackWebview);
+
+    preferenceTheme.ee.on('change-active', () => {
+      theme.inject(slackWebview);
+    });
   });
 
   slackWebview.addEventListener('new-window', (event) => {

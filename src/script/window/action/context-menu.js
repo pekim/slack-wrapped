@@ -25,6 +25,11 @@ class ContextMenu {
       click: popup.toggleAbout
     }));
 
+    this.menu.append(new MenuItem({
+      label: 'Theme',
+      click: popup.toggleTheme
+    }));
+
     this.menu.append(new MenuItem({ type: 'separator' }));
 
     if (options.url) {

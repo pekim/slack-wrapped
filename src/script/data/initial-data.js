@@ -2,6 +2,13 @@
 
 module.exports = {
   popup: {
-    showAbout: false
+    showAbout: false,
+    showTheme: false
+  },
+
+  theme: {
+    active : null,
+    builtin: [],
+    user   : []
   }
 };

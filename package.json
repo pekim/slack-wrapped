@@ -5,6 +5,7 @@
   "main": "script/main.js",
   "dependencies": {
     "babel": "^5.2.9",
+    "css": "^2.2.0",
     "eslint": "^0.18.0",
     "eslint-plugin-react": "^2.2.0",
     "gulp": "^3.8.11",

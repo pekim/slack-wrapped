@@ -1,28 +1,44 @@
 'use strict';
 
-const fs = require('fs');
-const appPath = appRequire('app-path');
+const data = appRequire('data/data');
 
-const themePath = appPath('style/theme/dark.css');
+function inject(webview) {
+  const themes = data.getIn(['theme']);
+  const themeName = themes.get('active');
 
-function inject(slackWebview) {
-  fs.readFile(themePath, (err, css) => {
-    if (err) {
-      console.error(`failed to load theme '${themePath}'`, err);
-      return;
+  removeTheme(webview);
+
+  if (themeName && themeName !== 'null') {
+    const themeType = themeName.split('-')[0];
+    const theme = themes.getIn([themeType]).find((theme) => {
+      return theme.get('id') === themeName;
+    });
+
+    injectTheme(webview, theme.get('css'));
+  }
+}
+
+function removeTheme(webview) {
+  webview.executeJavaScript(`
+    var themeElement = document.querySelector('.slack-wrapped-theme');
+
+    if (themeElement) {
+      themeElement.remove();
     }
+  `);
+}
 
-    const cssString = css.toString().replace(/\n/g, '');
+function injectTheme(webview, css) {
+  const cssWithNewlinesRemoved = css.replace(/\n/g, '');
 
-    slackWebview.executeJavaScript(`
-      var css = "${cssString}";
-      var styleElement = document.createElement("style");
+  webview.executeJavaScript(`
+    var css = "${cssWithNewlinesRemoved}";
+    var styleElement = document.createElement("style");
 
-      styleElement.classList.add('slack-wrapped-theme');
-      styleElement.textContent = css;
-      document.body.appendChild(styleElement);
-    `);
-  });
+    styleElement.classList.add('slack-wrapped-theme');
+    styleElement.textContent = css;
+    document.body.appendChild(styleElement);
+  `);
 }
 
 exports.inject = inject;
