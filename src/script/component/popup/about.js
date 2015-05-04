@@ -1,66 +1,45 @@
 'use strict';
 
 const React = require('react');
-const ContextMenu = appRequire('window/action/context-menu');
-const popup = appRequire('window/action/popup');
 const packageData = appRootRequire('package.json');
+const Popup = appRequire('component/popup/popup');
 const slackBrand = appRequire('slack-brand');
-const keycode = appRequire('keys/keycode');
 
-const contextMenu = new ContextMenu();
-
-const Help = React.createClass({
-  onClick: function() {
-    popup.close();
-  },
-
-  onKeyDown: function(event) {
-    if (event.keyCode === keycode.ESCAPE) {
-      popup.close();
-    }
-  },
-
-  onContextMenu: function() {
-    contextMenu.open();
-  },
-
-  componentDidMount: function() {
-    React.findDOMNode(this).focus();
-  },
-
+const About = React.createClass({
   render: function() {
     return (
-      <div className="popup" tabIndex="1"
-          onKeyDown={this.onKeyDown}
-          onContextMenu={this.onContextMenu}
-      >
-        <div className="overlay" onClick={this.onClick}/>
-        <div className="popup-content about">
+      <Popup>
+        <div className="about">
           {this.renderApp()}
           {this.renderVersions()}
           {this.renderSlack()}
         </div>
-      </div>
+      </Popup>
     );
   },
 
   renderApp: function() {
     return (
       <div className="app-name">
-        Slack Wrapped - Slack wrapped up as an application - {packageData.version}
+        Slack wrapped up as an application
       </div>
     );
   },
 
   renderVersions: function() {
+    const versions = Object.assign({
+      slackWrapped: packageData.version
+    }, process.versions);
+
     return [
+      [packageData.name, 'slackWrapped'],
       ['chrome', 'chrome'],
       ['electron', 'electron'],
       ['io.js', 'node'],
       ['v8', 'v8']
     ].map((product, index) => {
       const [label, productName] = product;
-      const version = process.versions[productName];
+      const version = versions[productName];
 
       return (
         <div key={index} className="product-version">
@@ -83,4 +62,4 @@ const Help = React.createClass({
   }
 });
 
-module.exports = Help;
+module.exports = About;

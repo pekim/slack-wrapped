@@ -1,20 +1,11 @@
+generalise popups
+
 depend on electron-prebuilt ?
   use in npm start
 
-about dialog
-  name
-  versions
-    slack-wrapped
-    electron
-    node
-    chrome
-    v8
-  icon
-  slack disclaimer
-
 menu for tray icon
   open
-  quite
+  quit
 
   implication
     closing window would not quite app
