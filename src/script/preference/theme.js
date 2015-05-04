@@ -81,13 +81,13 @@ function watchUserThemes() {
   fs.watch(userThemePath, setAvailableThemes);
 }
 
-function initialiase() {
+function initialise() {
   set(get());
 
   setAvailableThemes();
   watchUserThemes();
 }
 
-initialiase();
+initialise();
 
 exports.set = set;

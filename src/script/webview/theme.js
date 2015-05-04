@@ -18,6 +18,7 @@ function inject(slackWebview) {
       var css = "${cssString}";
       var styleElement = document.createElement("style");
 
+      styleElement.classList.add('slack-wrapped-theme');
       styleElement.textContent = css;
       document.body.appendChild(styleElement);
     `);
