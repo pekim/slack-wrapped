@@ -31,7 +31,7 @@ function initialise(webview) {
   });
 
   browserWindow.on('focus', () => {
-    slackWebview.focus();
+    focus();
   });
 
   notifications(slackWebview);
@@ -43,7 +43,7 @@ function initialise(webview) {
   });
 
   slackWebview.addEventListener('did-finish-load', () => {
-    slackWebview.focus();
+    focus();
     theme.inject(slackWebview);
     unreadCount.inject(slackWebview);
   });
@@ -62,5 +62,10 @@ function setZoomFactor(zoomFactor) {
   slackWebview.executeJavaScript(`document.body.style.zoom = ${zoomFactor};`);
 }
 
+function focus() {
+  slackWebview.focus();
+}
+
 exports.initialise = initialise;
 exports.setZoomFactor = setZoomFactor;
+exports.focus = focus;

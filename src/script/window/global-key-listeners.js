@@ -13,11 +13,6 @@ const toggleDevToolsBound = toggleDevTools.bind(null, toggleDevToolsKeyCombinati
 
 const combinations = [
   {
-    keys       : 'ESCAPE',
-    handler    : popup.close,
-    description: 'Close popup'
-  },
-  {
     keys       : 'F1',
     handler    : popup.toggleAbout,
     description: 'Help'

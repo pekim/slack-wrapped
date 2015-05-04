@@ -4,16 +4,26 @@ const React = require('react');
 const popup = appRequire('window/action/popup');
 const packageData = appRootRequire('package.json');
 const slackBrand = appRequire('slack-brand');
+const keycode = appRequire('keys/keycode');
 
 const Help = React.createClass({
   onClick: function() {
-    console.log('about click')
     popup.close();
+  },
+
+  onKeyDown: function(event) {
+    if (event.keyCode === keycode.ESCAPE) {
+      popup.close();
+    }
+  },
+
+  componentDidMount: function() {
+    React.findDOMNode(this).focus();
   },
 
   render: function() {
     return (
-      <div className="popup">
+      <div className="popup" tabIndex="1" onKeyDown={this.onKeyDown}>
         <div className="overlay" onClick={this.onClick}/>
         <div className="popup-content about">
           {this.renderApp()}
