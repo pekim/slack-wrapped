@@ -38,7 +38,7 @@
   "author": "Mike D Pilsbury",
   "license": "MIT",
   "electron": {
-    "version": "0.25.1",
+    "version": "0.25.2",
     "variants": [
       "darwin-x64",
       "linux-x64",
