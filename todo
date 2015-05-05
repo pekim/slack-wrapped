@@ -1,4 +1,4 @@
-generalise popups
+Tray.setToolTip(toolTip)
 
 depend on electron-prebuilt ?
   use in npm start
