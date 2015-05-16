@@ -3,18 +3,20 @@
 const async = require('async');
 const npm = require('npm');
 const request = require('request');
-const findit = require('findit');
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
 const exec = require('child_process').exec;
 const replace = require('replace');
+const ncp = require('ncp').ncp;
 
 const rootDir = '../../';
 const packageJsonPath = path.join(rootDir, 'package.json');
 
 const electronConfig = require(packageJsonPath).electron;
 
+const nodeModulesDir = path.join('./', 'node_modules');
+const builtAppDir = path.join('./', 'build');
 const distDir = path.join('./', 'dist');
 const cacheDir = path.join(distDir, 'cache');
 const releaseDir = path.join(distDir, 'release');
@@ -37,6 +39,12 @@ const executableNames = {
   }
 };
 
+const resourceAppPaths = {
+  'darwin-x64': 'Electron.app/Contents/Resources/app',
+  'linux-x64' : 'resources/app',
+  'win32-x64' : 'resources/app'
+};
+
 function bumpNpmVersion(done) {
   if (newVersion) {
     async.series([
@@ -57,8 +65,8 @@ function makeReleaseAsset(asset, callback) {
     done => done(null, asset),
     ensureElectronReleaseAssetExists,
     unzipElectronReleaseAsset,
-    renameElectronExecutable,
     addAppToResources,
+    renameElectronExecutable,
     zipReleaseAsset
   ], callback);
 }
@@ -175,19 +183,16 @@ function darwinExecutableNameFixup(asset, callback) {
 }
 
 function addAppToResources(asset, callback) {
-  const finder = findit(asset.distDir);
+  const resourceAppPath = path.join(asset.distDir, resourceAppPaths[asset.simpleName]);
+  const nodeModulesDestPath = path.join(resourceAppPath, 'node_modules');
 
-  finder.on('directory', (dir/*, stat, stop*/) => {
-    if (path.basename(dir).toLowerCase() === 'resources') {
-      // console.log(asset.simpleName, dir)
-    }
-  });
+  // fs.mkdirSync(resourceAppPath);
+  // fs.mkdirSync(nodeModulesDestPath);
 
-  finder.on('error', err => {
-    finder.stop();
-    callback(err);
-  });
-  finder.on('end', () => callback(null, asset));
+  async.series([
+    done => ncp(builtAppDir, resourceAppPath, done),
+    done => ncp(nodeModulesDir, nodeModulesDestPath, done)
+  ], err => callback(err, asset));
 }
 
 function filterVariants(releaseTags, callback) {
