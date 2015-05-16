@@ -7,7 +7,7 @@ const findit = require('findit');
 const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
-const Zip = require('adm-zip');
+const exec = require('child_process').exec;
 
 const rootDir = '../../';
 const packageJsonPath = path.join(rootDir, 'package.json');
@@ -16,7 +16,7 @@ const electronConfig = require(packageJsonPath).electron;
 
 const distDir = path.join('./', 'dist');
 const cacheDir = path.join(distDir, 'cache');
-const releaseDir = path.join(distDir, electronConfig.version);
+const releaseDir = path.join(distDir, 'release');
 
 const newVersion = process.argv[2];
 
@@ -41,7 +41,7 @@ function makeReleaseAsset(asset, callback) {
     ensureElectronReleaseAssetExists,
     unzipElectronReleaseAsset,
     addAppToResources,
-    // zipReleaseAsset
+    zipReleaseAsset
   ], callback);
 }
 
@@ -85,20 +85,35 @@ function fetchElectronReleaseAsset(asset, callback) {
 }
 
 function unzipElectronReleaseAsset(asset, callback) {
-  const zip = new Zip(asset.localElectronAssetFilePath);
+  exec(`unzip -q ${asset.localElectronAssetFilePath} -d ${asset.distDir}`, (err, stdout, stderr) => {
+    if (stdout.length) {
+      console.log(stdout);
+    }
+    if (stderr.length) {
+      console.error(stderr);
+    }
 
-  zip.extractAllTo(asset.distDir);
-
-  callback(null, asset);
+    callback(err, asset);
+  });
 }
 
 function zipReleaseAsset(asset, callback) {
-  const zip = new Zip();
+  exec(`zip -r -q --symlinks ${path.resolve(asset.releaseAssetPath)} .`, {
+    cwd: path.resolve(asset.distDir)
+  }, (err, stdout, stderr) => {
+    if (stdout.length) {
+      console.log(stdout);
+    }
+    if (stderr.length) {
+      console.error(stderr);
+    }
 
-  zip.addLocalFolder(asset.distDir, '.');
-  zip.writeZip(asset.releaseAssetPath);
+    if (!err) {
+      console.log(`wrote ${asset.releaseAssetPath}`);
+    }
 
-  callback();
+    callback(err);
+  });
 }
 
 function addAppToResources(asset, callback) {
@@ -106,19 +121,22 @@ function addAppToResources(asset, callback) {
 
   finder.on('directory', (dir/*, stat, stop*/) => {
     if (path.basename(dir).toLowerCase() === 'resources') {
-      console.log(asset.simpleName, dir)
+      // console.log(asset.simpleName, dir)
     }
   });
 
-  finder.on('end', () => callback);
+  finder.on('error', err => {
+    finder.stop();
+    callback(err);
+  });
+  finder.on('end', () => callback(null, asset));
 }
 
 function filterVariants(releaseTags, callback) {
   const assets = releaseTags.assets
     .filter(asset => {
       return electronConfig.variants.some(variant => {
-        return asset.name.includes(variant) &&
-          !asset.name.includes('-symbols');
+        return asset.name === `electron-v${electronConfig.version}-${variant}.zip`;
       });
     });
 
