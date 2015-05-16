@@ -8,6 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
 const exec = require('child_process').exec;
+const replace = require('replace');
 
 const rootDir = '../../';
 const packageJsonPath = path.join(rootDir, 'package.json');
@@ -19,6 +20,22 @@ const cacheDir = path.join(distDir, 'cache');
 const releaseDir = path.join(distDir, 'release');
 
 const newVersion = process.argv[2];
+
+const executableNames = {
+  'darwin-x64': {
+    electron: 'Electron.app',
+    slack   : 'Slack Wrapped.app',
+    helper  : darwinExecutableNameFixup
+  },
+  'linux-x64': {
+    electron: 'electron',
+    slack   : 'slack-wrapped'
+  },
+  'win32-x64': {
+    electron: 'electron.exe',
+    slack   : 'slack-wrapped.exe'
+  }
+};
 
 function bumpNpmVersion(done) {
   if (newVersion) {
@@ -40,6 +57,7 @@ function makeReleaseAsset(asset, callback) {
     done => done(null, asset),
     ensureElectronReleaseAssetExists,
     unzipElectronReleaseAsset,
+    renameElectronExecutable,
     addAppToResources,
     zipReleaseAsset
   ], callback);
@@ -112,8 +130,48 @@ function zipReleaseAsset(asset, callback) {
       console.log(`wrote ${asset.releaseAssetPath}`);
     }
 
-    callback(err);
+    callback(err, asset);
   });
+}
+
+function renameElectronExecutable(asset, callback) {
+  asset.electronExecutableName = executableNames[asset.simpleName].electron;
+  asset.slackExecutableName = executableNames[asset.simpleName].slack;
+
+  asset.electronExecutablePath = path.join(asset.distDir, asset.electronExecutableName);
+  asset.slackExecutablePath = path.join(asset.distDir, asset.slackExecutableName);
+
+  fs.renameSync(asset.electronExecutablePath, asset.slackExecutablePath);
+
+  if (executableNames[asset.simpleName].helper) {
+    executableNames[asset.simpleName].helper(asset, callback);
+  } else {
+    callback(null, asset);
+  }
+}
+
+function darwinExecutableNameFixup(asset, callback) {
+  replace({
+    regex      : '<string>Electron</string>',
+    replacement: '<string>Slack Wrapped</string>',
+    paths      : [path.join(asset.slackExecutablePath, 'Contents/Info.plist')],
+    recursive  : false,
+    silent     : true
+  });
+
+  const electronHelperAppPath = path.join(asset.slackExecutablePath, 'Contents/Frameworks/Electron Helper.app');
+  const slackHelperAppPath = path.join(asset.slackExecutablePath, 'Contents/Frameworks/Slack Wrapped Helper.app');
+  fs.renameSync(electronHelperAppPath, slackHelperAppPath);
+
+  replace({
+    regex      : '<string>Electron Helper</string>',
+    replacement: '<string>Slack Wrapped Helper</string>',
+    paths      : [path.join(slackHelperAppPath, 'Contents/Info.plist')],
+    recursive  : false,
+    silent     : true
+  });
+
+  callback(null, asset);
 }
 
 function addAppToResources(asset, callback) {
