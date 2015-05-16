@@ -1,14 +1,19 @@
 Tray.setToolTip(toolTip)
 
-depend on electron-prebuilt ?
-  use in npm start
+tray icon menu
+  open/focus window
 
-menu for tray icon
-  open
-  quit
+  close window (but not quit)
 
   implication
     closing window would not quite app
+
+  ability to quit
+    context menu
+    keyboard shortcut
+
+context menu
+  https://github.com/wlaurance/slack-for-linux/issues/20
 
 theme selection
   none (default)
@@ -16,6 +21,8 @@ theme selection
   custom
 
 package
+  commit & branch
+
   linux
   max
   windows
@@ -23,3 +30,37 @@ package
   docker
     image
     shell script to run and expose to X
+
+  .
+    build
+      app
+        ...html
+        image
+        script
+        style
+
+      electron
+        release
+          v0.25.0
+            ...linux...zip
+            ...mac...zip
+            ...windows...zip
+
+          v0.25.1-partial
+            mac
+
+        unpacked
+          v0.25.0
+            linux
+              ...
+            mac
+              ...
+            windows
+              ...
+
+    dist
+      v0.25.0
+        ...linux...zip
+        ...mac...zip
+        ...windows...zip
+        ...docker...zip
