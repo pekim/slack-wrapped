@@ -50,7 +50,7 @@ function bumpNpmVersion(done) {
     async.series([
       callback => npm.load({}, callback),
       callback => npm.commands.version([newVersion], callback)
-    ], done);
+    ], err => done(err));
   } else {
     setImmediate(done);
   }
