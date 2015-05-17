@@ -1,13 +1,13 @@
 # Slack Wrapped
 Slack web client wrapped up as an application.
 
-## Status
-Experimental
-
 ## Why
 Slack does not provide a linux client.
 This is a simple wrapper around the slack web client that normally runs in
 a browser.
+
+## Downloads
+Downloads are available on the [releases](https://github.com/pekim/slack-wrapped/releases) page. 
 
 ## Features
 * It's a linux client for slack!
