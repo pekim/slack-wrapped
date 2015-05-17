@@ -10,11 +10,11 @@ function inject(webview) {
 
   if (themeName && themeName !== 'null') {
     const themeType = themeName.split('-')[0];
-    const theme = themes.getIn([themeType]).find((theme) => {
+    const selectedTheme = themes.getIn([themeType]).find((theme) => {
       return theme.get('id') === themeName;
     });
 
-    injectTheme(webview, theme.get('css'));
+    injectTheme(webview, selectedTheme.get('css'));
   }
 }
 
