@@ -29,10 +29,13 @@ function removeTheme(webview) {
 }
 
 function injectTheme(webview, css) {
-  const cssWithNewlinesRemoved = css.replace(/\n/g, '');
+  const processedCss = css
+    .replace(/\n/g, '')
+    .replace(/"/g, '\\"')
+  ;
 
   webview.executeJavaScript(`
-    var css = "${cssWithNewlinesRemoved}";
+    var css = "${processedCss}";
     var styleElement = document.createElement("style");
 
     styleElement.classList.add('slack-wrapped-theme');

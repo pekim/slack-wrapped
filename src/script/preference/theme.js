@@ -112,9 +112,9 @@ function setAvailableThemesForType(themeType, directory, callback1) {
 
       callback(null, {
         id         : `${themeType}-${name}`,
-        name       : name,
+        name       : trimQuotes(name),
         filename   : filename,
-        description: description,
+        description: trimQuotes(description),
         css        : cssString
       });
     });
@@ -125,6 +125,18 @@ function setAvailableThemesForType(themeType, directory, callback1) {
       });
 
       return (declaration || {}).value;
+    }
+
+    function trimQuotes(string) {
+      if (string.startsWith('\'')) {
+        string = string.slice(1);
+      }
+
+      if (string.endsWith('\'')) {
+        string = string.slice(0, -1);
+      }
+
+      return string;
     }
   }
 }
