@@ -18,7 +18,7 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   mainWindow = new BrowserWindow({
-    icon: slackBrand.stickerImagePath
+    icon: slackBrand.getStickerImagePath(128)
   });
 
   mainWindow.hide();

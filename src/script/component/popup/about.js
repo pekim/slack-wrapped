@@ -53,7 +53,7 @@ const About = React.createClass({
   renderSlack: function() {
     return ([
       <div key="1" className="slack-logo">
-        <img src={slackBrand.stickerImagePath}/>
+        <img src={slackBrand.getStickerImagePath(64)}/>
       </div>,
       <div key="2" className="slack-not-affiliated">
         {slackBrand.notAffiliatedText}

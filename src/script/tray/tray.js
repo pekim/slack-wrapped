@@ -6,7 +6,7 @@ const nativeImage = require('native-image');
 const slackBrand = require('../slack-brand');
 
 function initialise() {
-  const appIcon = new Tray(slackBrand.stickerImagePath);
+  const appIcon = new Tray(slackBrand.getStickerImagePath(64));
 
   appIcon.setToolTip('Slack Wrapped');
 

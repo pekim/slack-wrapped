@@ -7,7 +7,7 @@ module.exports = function(webview) {
       const title = event.args[0];
       const options = event.args[1] || {};
 
-      options.icon = slackBrand.stickerImagePath;
+      options.icon = slackBrand.getStickerImagePath(64);
 
       /* eslint-disable no-new */
       new Notification(title, options);

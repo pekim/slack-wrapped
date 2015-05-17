@@ -1,6 +1,3 @@
-
-Tray.setToolTip(toolTip)
-
 tray icon menu
   open/focus window
 
@@ -20,10 +17,6 @@ context menu
 
   paste message in to input box
   quote message
-
-dark theme
-  make hard to read text easier to read
-    look for yellow / white
 
 theme selection
   none (default)
