@@ -1,3 +1,4 @@
+
 Tray.setToolTip(toolTip)
 
 tray icon menu
@@ -15,52 +16,18 @@ tray icon menu
 context menu
   https://github.com/wlaurance/slack-for-linux/issues/20
 
+  search (ggogle) for selected text
+
+  paste message in to input box
+  quote message
+
+dark theme
+  make hard to read text easier to read
+    look for yellow / white
+
 theme selection
   none (default)
   dark
   custom
 
-package
-  commit & branch
-
-  linux
-  max
-  windows
-
-  docker
-    image
-    shell script to run and expose to X
-
-  .
-    build
-      app
-        ...html
-        image
-        script
-        style
-
-      electron
-        release
-          v0.25.0
-            ...linux...zip
-            ...mac...zip
-            ...windows...zip
-
-          v0.25.1-partial
-            mac
-
-        unpacked
-          v0.25.0
-            linux
-              ...
-            mac
-              ...
-            windows
-              ...
-
-    dist
-      v0.25.0
-        ...linux...zip
-        ...mac...zip
-        ...windows...zip
-        ...docker...zip
+theme watch & auto update

@@ -15,8 +15,8 @@ class ContextMenu {
     });
   }
 
-  open(options) {
-    options = options || {};
+  open(options = {}) {
+    this.options = options;
 
     this.menu = new Menu();
 
@@ -30,9 +30,14 @@ class ContextMenu {
       click: popup.toggleTheme
     }));
 
-    this.menu.append(new MenuItem({ type: 'separator' }));
+    this.menu.append(new MenuItem({
+      label  : 'Tools',
+      submenu: this.toolsMenu()
+    }));
 
     if (options.url) {
+      this.menu.append(new MenuItem({ type: 'separator' }));
+
       this.menu.append(new MenuItem({
         label: 'Open link in browser',
         click: () => shell.openExternal(options.url)
@@ -41,36 +46,6 @@ class ContextMenu {
       this.menu.append(new MenuItem({
         label: 'Copy link address',
         click: () => clipboard.writeText(options.url)
-      }));
-
-      this.menu.append(new MenuItem({ type: 'separator' }));
-    }
-
-    this.menu.append(new MenuItem({
-      label: 'window - Inspect element',
-      click: () => this.inspectElement()
-    }));
-
-    this.menu.append(new MenuItem({
-      label: 'window - Open devtools',
-      click: () => this.openDevTools()
-    }));
-
-    if (options.webviewInspectElement || options.webviewOpenDevTools) {
-      this.menu.append(new MenuItem({ type: 'separator' }));
-    }
-
-    if (options.webviewInspectElement) {
-      this.menu.append(new MenuItem({
-        label: 'webview - Inspect element',
-        click: () => options.webviewInspectElement()
-      }));
-    }
-
-    if (options.webviewOpenDevTools) {
-      this.menu.append(new MenuItem({
-        label: 'webview - Open devtools',
-        click: () => options.webviewOpenDevTools()
       }));
     }
 
@@ -87,6 +62,40 @@ class ContextMenu {
 
   currentWindow() {
     return remote.getCurrentWindow();
+  }
+
+  toolsMenu() {
+    const menu = new Menu();
+
+    menu.append(new MenuItem({
+      label: 'window - Inspect element',
+      click: () => this.inspectElement()
+    }));
+
+    menu.append(new MenuItem({
+      label: 'window - Open devtools',
+      click: () => this.openDevTools()
+    }));
+
+    if (this.options.webviewInspectElement || this.options.webviewOpenDevTools) {
+      menu.append(new MenuItem({ type: 'separator' }));
+    }
+
+    if (this.options.webviewInspectElement) {
+      menu.append(new MenuItem({
+        label: 'webview - Inspect element',
+        click: () => this.options.webviewInspectElement()
+      }));
+    }
+
+    if (this.options.webviewOpenDevTools) {
+      menu.append(new MenuItem({
+        label: 'webview - Open devtools',
+        click: () => this.options.webviewOpenDevTools()
+      }));
+    }
+
+    return menu;
   }
 }
 
