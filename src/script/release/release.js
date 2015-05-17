@@ -186,9 +186,6 @@ function addAppToResources(asset, callback) {
   const resourceAppPath = path.join(asset.distDir, resourceAppPaths[asset.simpleName]);
   const nodeModulesDestPath = path.join(resourceAppPath, 'node_modules');
 
-  // fs.mkdirSync(resourceAppPath);
-  // fs.mkdirSync(nodeModulesDestPath);
-
   async.series([
     done => ncp(builtAppDir, resourceAppPath, done),
     done => ncp(nodeModulesDir, nodeModulesDestPath, done)
