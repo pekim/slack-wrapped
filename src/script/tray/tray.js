@@ -8,6 +8,8 @@ const slackBrand = require('../slack-brand');
 function initialise() {
   const appIcon = new Tray(slackBrand.stickerImagePath);
 
+  appIcon.setToolTip('Slack Wrapped');
+
   const ipc = require('ipc');
   ipc.on('trayImage', (event, arg) => {
     const imageData = arg;
