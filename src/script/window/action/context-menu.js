@@ -35,33 +35,25 @@ class ContextMenu {
       submenu: this.toolsMenu()
     }));
 
-    if (options.url) {
-      this.menu.append(new MenuItem({ type: 'separator' }));
-
-      this.menu.append(new MenuItem({
-        label: 'Open link in browser',
-        click: () => shell.openExternal(options.url)
-      }));
-
-      this.menu.append(new MenuItem({
-        label: 'Copy link address',
-        click: () => clipboard.writeText(options.url)
-      }));
-    }
+    this.addUrlRelatedItems();
 
     this.menu.popup(remote.getCurrentWindow());
   }
 
-  inspectElement() {
-    this.currentWindow().inspectElement(this.mouseX, this.mouseY);
-  }
+  addUrlRelatedItems() {
+    if (this.options.url) {
+      this.menu.append(new MenuItem({ type: 'separator' }));
 
-  openDevTools() {
-    this.currentWindow().openDevTools();
-  }
+      this.menu.append(new MenuItem({
+        label: 'Open link in browser',
+        click: () => shell.openExternal(this.options.url)
+      }));
 
-  currentWindow() {
-    return remote.getCurrentWindow();
+      this.menu.append(new MenuItem({
+        label: 'Copy link address',
+        click: () => clipboard.writeText(this.options.url)
+      }));
+    }
   }
 
   toolsMenu() {
@@ -96,6 +88,18 @@ class ContextMenu {
     }
 
     return menu;
+  }
+
+  inspectElement() {
+    this.currentWindow().inspectElement(this.mouseX, this.mouseY);
+  }
+
+  openDevTools() {
+    this.currentWindow().openDevTools();
+  }
+
+  currentWindow() {
+    return remote.getCurrentWindow();
   }
 }
 
