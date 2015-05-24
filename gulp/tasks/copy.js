@@ -10,7 +10,8 @@ var glob = [
   config.path.source + 'font/**',
   config.path.source + 'image/**',
   config.path.source + '**/*.css',
-  config.path.source + '**/*.html'
+  config.path.source + '**/*.html',
+  config.path.source + '**/dictionaries/*'
 ];
 
 gulp.task('copy', function () {

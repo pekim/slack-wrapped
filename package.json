@@ -30,7 +30,8 @@
     "react": "0.13.3",
     "replace": "0.3.0",
     "request": "2.55.0",
-    "rimraf": "2.3.4"
+    "rimraf": "2.3.4",
+    "spellcheck": "0.0.5"
   },
   "scripts": {
     "build": "gulp build",

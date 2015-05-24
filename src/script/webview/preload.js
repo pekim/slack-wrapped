@@ -1,13 +1,16 @@
 'use strict';
-/* global TS */
+
+require('./app-require').init();
 
 const ipc = require('ipc');
+const spellcheck = appRequire('spellcheck/spellcheck');
 
 proxyNotifications();
 unreadCountUpdate();
 monitorTeamUrl();
 contextMenuListener();
 removeConflicts();
+spellcheck.initialise();
 
 // intercept notifications and have them handled in the hosting window
 // where an icon can be added.
@@ -23,17 +26,18 @@ function proxyNotifications() {
 
 function unreadCountUpdate() {
   window.unreadCountUpdate = function() {
-    if (window.TS && TS.model) {
-      ipc.sendToHost('unreadCount', TS.model.all_unread_cnt);
+    if (window.TS && window.TS.model) {
+      ipc.sendToHost('unreadCount', window.TS.model.all_unread_cnt);
     }
   };
 }
 
 function monitorTeamUrl() {
+  const TS = window.TS;
   let teamUrl;
 
   setInterval(() => {
-    if (window.TS && TS.boot_data && TS.boot_data.team_url) {
+    if (TS && TS.boot_data && TS.boot_data.team_url) {
       if (TS.boot_data.team_url !== teamUrl) {
         ipc.sendToHost('teamUrl', TS.boot_data.team_url);
         teamUrl = TS.boot_data.team_url;

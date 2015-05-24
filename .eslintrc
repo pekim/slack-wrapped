@@ -5,6 +5,7 @@
   },
 
   "globals": {
+    "appPath": true,
     "appRequire": true,
     "appRootRequire": true
   },
@@ -32,6 +33,7 @@
     "quotes": [2, "single", "avoid-escape"],
     "semi": [2, "always"],
     "strict": [2, "global"],
+    "no-warning-comments": [1, { "terms": ["todo", "fixme"], "location": "start" }],
 
     "react/jsx-quotes": [2, "double"],
     "react/jsx-no-undef": 2,

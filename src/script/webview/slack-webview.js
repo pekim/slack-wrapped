@@ -19,6 +19,10 @@ let slackWebview;
 function initialise(webview) {
   slackWebview = webview;
 
+  setInterval(() => {
+    // slackWebview.replaceMisspelling('Mike');
+  }, 1000);
+
   slackWebview.addEventListener('ipc-message', function(event) {
     if (event.channel === 'contextmenu') {
       const {targetUrl, x, y} = event.args[0];
