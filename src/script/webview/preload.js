@@ -10,7 +10,7 @@ unreadCountUpdate();
 monitorTeamUrl();
 contextMenuListener();
 removeConflicts();
-spellcheck.initialise();
+spellcheck.initialise(navigator.language.replace('-', '_'));
 
 // intercept notifications and have them handled in the hosting window
 // where an icon can be added.

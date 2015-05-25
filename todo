@@ -1,5 +1,17 @@
+move contents of this file to github issues
+  delete this file OR add to .gitignore
+
+unzip release & test it
+
+spell checking
+
+review gulp code
+
+no overlay with theme selection dialog?
+
 link to github page in about dialog
   get url from package.json
+    homepage
 
 better names of release files
   include target platform
@@ -34,3 +46,5 @@ theme selection
   custom
 
 theme watch & auto update
+
+auto update mechanism

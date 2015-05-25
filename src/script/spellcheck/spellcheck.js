@@ -1,48 +1,31 @@
 'use strict';
 
-const async = require('async');
-const fs = require('fs');
+const getDictionaries = require('./hunspell-dictionaries');
+const getSpellChecker = require('./hunspell-checker');
 const webframe = require('web-frame');
-const Spellchecker = require('hunspell-spellchecker');
 
-const languageAlternatives = {
-  'en_GB': 'en_GB-ise'
-};
-
-function initialise() {
-  const language = navigator.language.replace('-', '_');
-  const dictionaryLanguage = languageAlternatives[language] || language;
-
-  async.map(
-    ['aff', 'dic'],
-    (suffix, cb) => {
-      fs.readFile(appPath(`dictionaries/${dictionaryLanguage}.${suffix}`), cb);
-    },
-    (err, filesContent) => {
-      if (err) {
-        console.error(`failed to load dictionary for ${navigator.language}`, err);
-      } else {
-        createAndRegisterSpellchecker(...filesContent);
-      }
-    }
-  );
+function createAndRegisterSpellchecker(language) {
+  getDictionaries
+    .then(dictionaries => {
+      return dictionaries[language];
+    })
+    .then(getSpellChecker)
+    .then(checker => {
+      registerSpellChecker(language, checker);
+    })
+    .catch(exception => {
+      console.log(exception);
+    })
+  ;
 }
 
-function createAndRegisterSpellchecker(aff, dic) {
-  const spellchecker = new Spellchecker();
-
-  const DICT = spellchecker.parse({
-    aff: aff,
-    dic: dic
-  });
-
-  spellchecker.use(DICT);
-
-  webframe.setSpellCheckProvider(navigator.language, true, {
-    spellCheck: function(text) {
-      return spellchecker.check(text);
+function registerSpellChecker(language, checker) {
+  webframe.setSpellCheckProvider(language, true, {
+    spellCheck: word => {
+      console.log(word, checker.check(word))
+      return checker.check(word);
     }
   });
 }
 
-exports.initialise = initialise;
+exports.initialise = createAndRegisterSpellchecker;
