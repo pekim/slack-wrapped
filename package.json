@@ -16,6 +16,7 @@
     "css": "2.2.0",
     "eslint": "0.21.2",
     "eslint-plugin-react": "2.3.0",
+    "glob": "^5.0.9",
     "gulp": "3.8.11",
     "gulp-babel": "5.1.0",
     "gulp-ignore": "1.2.1",

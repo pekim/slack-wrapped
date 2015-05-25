@@ -1,6 +1,6 @@
 'use strict';
 
-global.appPath = require('./app-path');
+const appPath = require('./app-path');
 
 exports.init = function() {
   const appDir = appPath('/');

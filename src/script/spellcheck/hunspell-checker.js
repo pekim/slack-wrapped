@@ -6,8 +6,8 @@ const Spellchecker = require('hunspell-spellchecker');
 
 module.exports = function(dictionary) {
   return Promise.all([
-    fs.readFileSync(dictionary.aff),
-    fs.readFileSync(dictionary.dic)
+    fs.readFileAsync(dictionary.affPath),
+    fs.readFileAsync(dictionary.dicPath)
   ])
   .then(files => {
     const [aff, dic] = files;

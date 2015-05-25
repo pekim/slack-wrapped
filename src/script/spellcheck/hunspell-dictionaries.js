@@ -1,18 +1,45 @@
 'use strict';
 
 const Promise = require('bluebird');
-const _ = require('lodash');
+const path = require('path');
+const appPath = require('../app-path');
+const glob = Promise.promisify(require('glob'));
 
-const childProcess = Promise.promisifyAll(require('child_process'));
-const fs = Promise.promisifyAll(require('fs'));
+const dictionariesPath = appPath('dictionaries');
 
-module.exports = childProcess.execAsync('echo "" | hunspell -D')
-  .then(splitStderrIntoLines)
-  .then(convertToRealPaths)
-  .filter(isDictionary)
-  .then(_.uniq)
-  .then(asDictionaryObject)
-;
+module.exports = glob(path.join(dictionariesPath, '*.dic'))
+  .then(toMap);
+
+function toMap(dictionaryPaths) {
+  const dictionaries = dictionaryPaths.map(toDictionary);
+  const dictionariesMap = {};
+
+  dictionaries.forEach(dictionary => {
+    dictionariesMap[dictionary.normalisedLanguage] = dictionary;
+  });
+
+  return dictionariesMap;
+}
+
+function toDictionary(dictionaryPath) {
+  const language = extractLanguage(dictionaryPath);
+  const normalisedLanguage = language.slice(0, 5);
+  const dicPath = dictionaryPath;
+  const affPath = dictionaryPath.replace(/\.dic$/, '.aff');
+
+  return {language, normalisedLanguage, dicPath, affPath};
+}
+
+function extractLanguage(dictionaryPath) {
+  return /.*([a-z]{2}_[A-Z]{2}.*?)\.dic/.exec(dictionaryPath)[1];
+}
+
+// module.exports = childProcess.execAsync('echo "" | hunspell -D')
+//   .then(splitStderrIntoLines)
+//   .then(convertToRealPaths)
+//   .filter(isDictionary)
+//   .then(asDictionaryObject)
+// ;
 
 function splitStderrIntoLines(results) {
   const [, stderr] = results;
