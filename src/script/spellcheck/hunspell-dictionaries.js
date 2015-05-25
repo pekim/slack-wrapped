@@ -24,10 +24,11 @@ function toMap(dictionaryPaths) {
 function toDictionary(dictionaryPath) {
   const language = extractLanguage(dictionaryPath);
   const normalisedLanguage = language.slice(0, 5);
+  const basePath = dictionaryPath.slice(0, -4);
   const dicPath = dictionaryPath;
   const affPath = dictionaryPath.replace(/\.dic$/, '.aff');
 
-  return {language, normalisedLanguage, dicPath, affPath};
+  return {language, normalisedLanguage, basePath, dicPath, affPath};
 }
 
 function extractLanguage(dictionaryPath) {

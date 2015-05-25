@@ -4,6 +4,7 @@ require('./app-require').init();
 
 const ipc = require('ipc');
 const spellcheck = appRequire('spellcheck/spellcheck');
+const getMispelledWord = appRequire('spellcheck/find-mispelled-word');
 
 proxyNotifications();
 unreadCountUpdate();
@@ -50,11 +51,14 @@ function contextMenuListener() {
   document.addEventListener('contextmenu', (event) => {
     const node = event.target;
     const targetUrl = node.nodeName === 'A' ? node.href : null;
+    const mispelledWord = node.nodeName === 'TEXTAREA' ?
+      getMispelledWord(node) : null;
 
     ipc.sendToHost('contextmenu', {
-      targetUrl: targetUrl,
-      x        : event.pageX,
-      y        : event.pageY
+      mispelledWord: mispelledWord,
+      targetUrl    : targetUrl,
+      x            : event.pageX,
+      y            : event.pageY
     });
   });
 }
