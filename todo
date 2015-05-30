@@ -1,7 +1,11 @@
-move contents of this file to github issues
-  delete this file OR add to .gitignore
+check for new releases
+  periodically
+  how inform user?
 
 unzip release & test it
+
+move contents of this file to github issues
+  delete this file OR add to .gitignore
 
 spell checking
 
@@ -15,10 +19,6 @@ link to github page in about dialog
 
 better names of release files
   include target platform
-
-sound on new messages
-  make sound
-  configurable
 
 tray icon menu
   open/focus window

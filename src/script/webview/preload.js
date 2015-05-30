@@ -52,7 +52,9 @@ function contextMenuListener() {
     const node = event.target;
     const targetUrl = node.nodeName === 'A' ? node.href : null;
 
-    if (node.nodeName === 'TEXTAREA') {
+    if (node.nodeName === 'TEXTAREA' ||
+      (node.nodeName === 'INPUT' && node.getAttribute('type') === 'text')
+    ) {
       getMispelledWord(node, sendToHost);
     } else {
       sendToHost();
