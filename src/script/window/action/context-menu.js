@@ -6,6 +6,7 @@ const MenuItem = remote.require('menu-item');
 const popup = appRequire('window/action/popup');
 const clipboard = remote.require('clipboard');
 const shell = require('shell');
+const slackWebview = appRequire('webview/slack-webview');
 
 class ContextMenu {
   constructor() {
@@ -43,18 +44,22 @@ class ContextMenu {
   }
 
   addSuggestions() {
-    if (!this.options.wordSuggestions || this.options.wordSuggestions.length ===0) {
+    if (!this.options.wordSuggestions || this.options.wordSuggestions.length === 0) {
       return;
     }
 
     for (const wordSuggestion of this.options.wordSuggestions) {
-      this.menu.append(new MenuItem({
-        label: wordSuggestion,
-        click: popup.toggleTheme
-      }));
+      this.addSuggestionItem(wordSuggestion);
     }
 
     this.menu.append(new MenuItem({ type: 'separator' }));
+  }
+
+  addSuggestionItem(wordSuggestion) {
+    this.menu.append(new MenuItem({
+      label: wordSuggestion,
+      click: () => slackWebview.replaceMisspelling(wordSuggestion)
+    }));
   }
 
   addUrlRelatedItems() {

@@ -19,10 +19,6 @@ let slackWebview;
 function initialise(webview) {
   slackWebview = webview;
 
-  setInterval(() => {
-    // slackWebview.replaceMisspelling('Mike');
-  }, 1000);
-
   slackWebview.addEventListener('ipc-message', function(event) {
     if (event.channel === 'contextmenu') {
       const {wordSuggestions, targetUrl, x, y} = event.args[0];
@@ -68,6 +64,10 @@ function initialise(webview) {
   }, 500);
 }
 
+function replaceMisspelling(correctSpelling) {
+  slackWebview.replaceMisspelling(correctSpelling);
+}
+
 function setZoomFactor(zoomFactor) {
   slackWebview.executeJavaScript(`document.body.style.zoom = ${zoomFactor};`);
 }
@@ -79,3 +79,4 @@ function focus() {
 exports.initialise = initialise;
 exports.setZoomFactor = setZoomFactor;
 exports.focus = focus;
+exports.replaceMisspelling = replaceMisspelling;
