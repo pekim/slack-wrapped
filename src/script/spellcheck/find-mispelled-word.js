@@ -15,15 +15,15 @@ getDictionaries
 ;
 
 
-module.exports = function(textarea) {
+module.exports = function(textarea, cb) {
   const word = getWordAt(textarea.value || '', textarea.selectionStart);
 
   if (suggester) {
     suggester
       .suggest(word)
-      .then(response => {
-        console.log(response);
-      });
+      .then(response => cb(response))
+      .catch(error => console.error(error))
+    ;
   }
 };
 

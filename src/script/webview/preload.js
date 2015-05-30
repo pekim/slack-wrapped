@@ -51,15 +51,21 @@ function contextMenuListener() {
   document.addEventListener('contextmenu', (event) => {
     const node = event.target;
     const targetUrl = node.nodeName === 'A' ? node.href : null;
-    const mispelledWord = node.nodeName === 'TEXTAREA' ?
-      getMispelledWord(node) : null;
 
-    ipc.sendToHost('contextmenu', {
-      mispelledWord: mispelledWord,
-      targetUrl    : targetUrl,
-      x            : event.pageX,
-      y            : event.pageY
-    });
+    if (node.nodeName === 'TEXTAREA') {
+      getMispelledWord(node, sendToHost);
+    } else {
+      sendToHost();
+    }
+
+    function sendToHost(wordSuggestions) {
+      ipc.sendToHost('contextmenu', {
+        wordSuggestions: wordSuggestions,
+        targetUrl      : targetUrl,
+        x              : event.pageX,
+        y              : event.pageY
+      });
+    }
   });
 }
 

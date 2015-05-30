@@ -25,9 +25,10 @@ function initialise(webview) {
 
   slackWebview.addEventListener('ipc-message', function(event) {
     if (event.channel === 'contextmenu') {
-      const {targetUrl, x, y} = event.args[0];
+      const {wordSuggestions, targetUrl, x, y} = event.args[0];
 
       contextMenu.open({
+        wordSuggestions      : wordSuggestions,
         url                  : targetUrl,
         webviewInspectElement: () => slackWebview.inspectElement(x, y),
         webviewOpenDevTools  : () => slackWebview.openDevTools()

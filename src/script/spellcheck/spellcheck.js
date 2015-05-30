@@ -22,7 +22,6 @@ function createAndRegisterSpellchecker(language) {
 function registerSpellChecker(language, checker) {
   webframe.setSpellCheckProvider(language, true, {
     spellCheck: word => {
-      console.log(word, checker.check(word))
       return checker.check(word);
     }
   });

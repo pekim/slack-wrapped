@@ -23,7 +23,7 @@ module.exports = class SpellSuggester {
   }
 
   suggest(word) {
-    this.process.stdin.write(`${word}\n`);
+    this.process.stdin.write(`^${word}\n`);
 
     return new Promise((resolve, reject) => {
       this.process.stdout.on('data', data => {
@@ -44,9 +44,13 @@ module.exports = class SpellSuggester {
 
   processResultLine(word, resultLine, resolve, reject) {
     if (resultLine.charAt(0) === '*') {
-      reject(`'${word}' is spelled correctly`);
+      // spelled correctly
+      resolve();
     } else if (resultLine.charAt(0) === '&') {
       resolve(this.processSuggestions(resultLine));
+    } else if (resultLine.charAt(0) === '#') {
+      // no suggestions
+      resolve();
     } else {
       reject(`unexpected response for '${word}' : ${resultLine}`);
     }

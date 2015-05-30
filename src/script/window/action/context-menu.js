@@ -20,6 +20,8 @@ class ContextMenu {
 
     this.menu = new Menu();
 
+    this.addSuggestions();
+
     this.menu.append(new MenuItem({
       label: 'About',
       click: popup.toggleAbout
@@ -38,6 +40,21 @@ class ContextMenu {
     this.addUrlRelatedItems();
 
     this.menu.popup(remote.getCurrentWindow());
+  }
+
+  addSuggestions() {
+    if (!this.options.wordSuggestions || this.options.wordSuggestions.length ===0) {
+      return;
+    }
+
+    for (const wordSuggestion of this.options.wordSuggestions) {
+      this.menu.append(new MenuItem({
+        label: wordSuggestion,
+        click: popup.toggleTheme
+      }));
+    }
+
+    this.menu.append(new MenuItem({ type: 'separator' }));
   }
 
   addUrlRelatedItems() {
