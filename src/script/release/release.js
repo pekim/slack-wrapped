@@ -204,6 +204,8 @@ function filterVariants(releaseTags, callback) {
 }
 
 function supplementVariants(assets, callback) {
+  const version = require(packageJsonPath).version;
+
   assets.forEach(asset => {
     asset.simpleName = electronConfig.variants.filter(variant => {
       return asset.name.includes(variant);
@@ -211,7 +213,7 @@ function supplementVariants(assets, callback) {
 
     asset.localElectronAssetFilePath = path.join(cacheDir, asset.name);
     asset.distDir = path.join(releaseDir, asset.simpleName);
-    asset.releaseAssetPath = path.join(releaseDir, asset.simpleName + '.zip');
+    asset.releaseAssetPath = path.join(releaseDir, `slack-wrapped-v${version}-${asset.simpleName}.zip`);
   });
 
   callback(null, assets);
