@@ -24,7 +24,6 @@ function zoomDefault() {
 }
 
 function setZoomFactor() {
-  console.log('szf', zoomFactor)
   localStorage.setItem(localStorageKey, zoomFactor);
 
   webFrame.setZoomFactor(zoomFactor);
