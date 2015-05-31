@@ -3,6 +3,7 @@
 require('./app-require').init();
 
 const ipc = require('ipc');
+const webFrame = require('web-frame');
 const spellcheck = appRequire('spellcheck/spellcheck');
 const getMispelledWord = appRequire('spellcheck/find-mispelled-word');
 
@@ -10,6 +11,7 @@ proxyNotifications();
 unreadCountUpdate();
 monitorTeamUrl();
 contextMenuListener();
+zoomFactorListener();
 removeConflicts();
 spellcheck.initialise(navigator.language.replace('-', '_'));
 
@@ -77,4 +79,10 @@ function removeConflicts() {
 
   delete window.require;
   delete window.module;
+}
+
+function zoomFactorListener() {
+  ipc.on('setZoomFactor', function(zoomFactor) {
+    webFrame.setZoomFactor(zoomFactor);
+  });
 }

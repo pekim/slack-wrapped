@@ -10,6 +10,7 @@ const teamUrl = require('./team-url');
 const theme = require('./theme');
 const ContextMenu = appRequire('window/action/context-menu');
 const preferenceTheme = appRequire('preference/theme');
+const zoom = appRequire('window/action/zoom');
 
 const browserWindow = BrowserWindow.getAllWindows()[0];
 
@@ -45,6 +46,7 @@ function initialise(webview) {
   });
 
   slackWebview.addEventListener('did-finish-load', () => {
+    zoom.initialise();
     focus();
     theme.inject(slackWebview);
     unreadCount.inject(slackWebview);
@@ -69,7 +71,7 @@ function replaceMisspelling(correctSpelling) {
 }
 
 function setZoomFactor(zoomFactor) {
-  slackWebview.executeJavaScript(`document.body.style.zoom = ${zoomFactor};`);
+  slackWebview.send('setZoomFactor', zoomFactor);
 }
 
 function focus() {

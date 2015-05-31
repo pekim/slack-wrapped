@@ -1,9 +1,11 @@
 'use strict';
 
-// const webFrame = require('web-frame');
+const webFrame = require('web-frame');
 const webview = appRequire('webview/slack-webview');
 
-let zoomFactor = 1;
+const localStorageKey = 'zoomFactor';
+
+let zoomFactor = parseFloat(localStorage.getItem(localStorageKey) || 1);
 const delta = 0.05;
 
 function zoomIn() {
@@ -22,10 +24,14 @@ function zoomDefault() {
 }
 
 function setZoomFactor() {
-  // webFrame.setZoomFactor(zoomFactor);
+  console.log('szf', zoomFactor)
+  localStorage.setItem(localStorageKey, zoomFactor);
+
+  webFrame.setZoomFactor(zoomFactor);
   webview.setZoomFactor(zoomFactor);
 }
 
 exports.in = zoomIn;
 exports.out = zoomOut;
 exports.default = zoomDefault;
+exports.initialise = setZoomFactor;
