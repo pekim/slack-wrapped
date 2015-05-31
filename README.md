@@ -7,12 +7,13 @@ This is a simple wrapper around the slack web client that normally runs in
 a browser.
 
 ## Downloads
-Downloads are available on the [releases](https://github.com/pekim/slack-wrapped/releases) page. 
+Downloads are available on the [releases](https://github.com/pekim/slack-wrapped/releases) page.
 
 ## Features
 * It's a linux client for slack!
 * Themes (only a proof of concept so far)
 * Open links in browser (or other system configured application)
+* Spell checking and suggestions
 * Tray icon, with unread message count
 * May work on Darwin and Windows (untested)
 
