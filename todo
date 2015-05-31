@@ -1,8 +1,19 @@
+default dictionary from navigator.language
+
+select dictionary to use
+  context menu options
+  option to disable spell checking
+
+unzip release & test it
+
+better names of release files
+  include target platform
+
+only include runtime (not dev) dependencies in release archives
+
 check for new releases
   periodically
   how inform user?
-
-unzip release & test it
 
 move contents of this file to github issues
   delete this file OR add to .gitignore
@@ -16,9 +27,6 @@ no overlay with theme selection dialog?
 link to github page in about dialog
   get url from package.json
     homepage
-
-better names of release files
-  include target platform
 
 tray icon menu
   open/focus window

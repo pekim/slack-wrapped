@@ -47,12 +47,13 @@ module.exports = class SpellSuggester {
       // spelled correctly
       resolve();
     } else if (resultLine.charAt(0) === '&') {
+      // suggestions
       resolve(this.processSuggestions(resultLine));
     } else if (resultLine.charAt(0) === '#') {
       // no suggestions
       resolve();
     } else {
-      reject(`unexpected response for '${word}' : ${resultLine}`);
+      reject(`unhandled response for '${word}' : ${resultLine}`);
     }
   }
 

@@ -1,11 +1,11 @@
 'use strict';
 
-const getDictionaries = require('./hunspell-dictionaries');
+const getDictionaries = require('./hunspell-dictionaries').getDictionaries;
 const getSpellChecker = require('./hunspell-checker');
 const webframe = require('web-frame');
 
 function createAndRegisterSpellchecker(language) {
-  getDictionaries
+  getDictionaries()
     .then(dictionaries => {
       return dictionaries[language];
     })

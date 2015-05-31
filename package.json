@@ -20,8 +20,7 @@
     "lodash": "3.9.2",
     "react": "0.13.3",
     "replace": "0.3.0",
-    "request": "2.55.0",
-    "spellcheck": "0.0.5"
+    "request": "2.55.0"
   },
   "devDependencies": {
     "eslint": "0.21.2",
@@ -59,9 +58,5 @@
       "linux-x64",
       "win32-x64"
     ]
-  },
-  "devDependencies": {
-    "electron-prebuilt": "^0.26.1",
-    "electron-rebuild": "^0.1.4"
   }
 }

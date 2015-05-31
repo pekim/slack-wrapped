@@ -1,19 +1,15 @@
 'use strict';
 
-const getDictionaries = require('./hunspell-dictionaries');
+const getActiveDictionary = require('./hunspell-dictionaries').getActiveDictionary;
 const SpellSuggester = require('./hunspell-suggester');
 
 let suggester;
 
-getDictionaries
-  .then(dictionaries => {
-    return dictionaries.en_GB;
-  })
+getActiveDictionary()
   .then(dictionary => {
     suggester = new SpellSuggester(dictionary);
   })
 ;
-
 
 module.exports = function(textarea, cb) {
   const word = getWordAt(textarea.value || '', textarea.selectionStart);

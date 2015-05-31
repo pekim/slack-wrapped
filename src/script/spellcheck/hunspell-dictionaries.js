@@ -7,7 +7,9 @@ const glob = Promise.promisify(require('glob'));
 
 const dictionariesPath = appPath('dictionaries');
 
-module.exports = glob(path.join(dictionariesPath, '*.dic'))
+let activeDictionaryName;
+
+const getDictionaries = glob(path.join(dictionariesPath, '*.dic'))
   .then(toMap);
 
 function toMap(dictionaryPaths) {
@@ -28,57 +30,63 @@ function toDictionary(dictionaryPath) {
   const dicPath = dictionaryPath;
   const affPath = dictionaryPath.replace(/\.dic$/, '.aff');
 
-  return {language, normalisedLanguage, basePath, dicPath, affPath};
+  return {
+    language,
+    normalisedLanguage,
+    basePath,
+    dicPath,
+    affPath
+  };
 }
 
 function extractLanguage(dictionaryPath) {
   return /.*([a-z]{2}_[A-Z]{2}.*?)\.dic/.exec(dictionaryPath)[1];
 }
 
-// module.exports = childProcess.execAsync('echo "" | hunspell -D')
-//   .then(splitStderrIntoLines)
-//   .then(convertToRealPaths)
-//   .filter(isDictionary)
-//   .then(asDictionaryObject)
-// ;
+function getActiveDictionary() {
+  return Promise.all([
+    getActiveDictionaryName(),
+    getDictionaries
+  ]).then(results => {
+      const [dictionaryName, dictionaries] = results;
 
-function splitStderrIntoLines(results) {
-  const [, stderr] = results;
-
-  return stderr.split('\n');
+      return dictionaries[dictionaryName];
+    })
+  ;
 }
 
-// some paths are sym links
-function convertToRealPaths(dictionaryPaths) {
-  const suffix = '.aff';
+function getActiveDictionaryName() {
+  return getDictionaries
+    .then(dictionaries => {
+      if (!activeDictionaryName) {
+        activeDictionaryName = localStorage.getItem('dictionary');
+      }
 
-  return Promise.all(dictionaryPaths.map(dictionaryPath => {
-    return fs.realpathAsync(`${dictionaryPath}${suffix}`)
-      .then(path => path.slice(0, -suffix.length))
-      .catch(exception => {
-        if (exception.cause.code !== 'ENOENT') {
-          return Promise.reject(exception);
+      if (!activeDictionaryName) {
+        if (navigator && navigator.language) {
+          const environmentLanguage = navigator.language.replace('-', '_');
+
+          if (dictionaries[environmentLanguage]) {
+            activeDictionaryName = environmentLanguage;
+          } else if (dictionaries[environmentLanguage.subst(0, 2)]) {
+            activeDictionaryName = environmentLanguage;
+          }
+        } else {
+          activeDictionaryName = Object.keys(dictionaries)[0];
         }
-      })
-    ;
-  }));
+      }
+
+      return activeDictionaryName;
+    })
+  ;
 }
 
-function isDictionary(value) {
-  return !!value;
+function setActiveDictionaryName(newActiveDictionaryName) {
+  activeDictionaryName = newActiveDictionaryName;
+  localStorage.setItem('dictionary', activeDictionaryName);
 }
 
-function asDictionaryObject(dictionaryPaths) {
-  const object = {};
-
-  dictionaryPaths.forEach(dictionaryPath => {
-    const indexOfLastSlash = dictionaryPath.lastIndexOf('/');
-    const language = dictionaryPath.slice(indexOfLastSlash + 1);
-    const aff = `${dictionaryPath}.aff`;
-    const dic = `${dictionaryPath}.dic`;
-
-    object[language] = {language, aff, dic};
-  });
-
-  return object;
-}
+exports.getDictionaries = () => getDictionaries;
+exports.getActiveDictionary = getActiveDictionary;
+exports.getActiveDictionaryName = getActiveDictionaryName;
+exports.setActiveDictionaryName = setActiveDictionaryName;
