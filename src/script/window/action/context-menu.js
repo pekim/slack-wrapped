@@ -40,20 +40,10 @@ class ContextMenu {
     this.menu = new Menu();
 
     this.addSuggestions();
-
-    this.menu.append(new MenuItem({
-      label: 'About',
-      click: popup.toggleAbout
-    }));
-
-    this.menu.append(new MenuItem({
-      label: 'Theme',
-      click: popup.toggleTheme
-    }));
-
+    this.addAbout();
+    this.addTheme();
     this.addSpellCheckSubmenu();
     this.addToolsSubmenu();
-
     this.addUrlRelatedItems();
 
     this.menu.popup(remote.getCurrentWindow());
@@ -75,6 +65,20 @@ class ContextMenu {
     this.menu.append(new MenuItem({
       label: wordSuggestion,
       click: () => slackWebview.replaceMisspelling(wordSuggestion)
+    }));
+  }
+
+  addAbout() {
+    this.menu.append(new MenuItem({
+      label: 'About',
+      click: popup.toggleAbout
+    }));
+  }
+
+  addTheme() {
+    this.menu.append(new MenuItem({
+      label: 'Theme',
+      click: popup.toggleTheme
     }));
   }
 
