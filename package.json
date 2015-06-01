@@ -7,7 +7,7 @@
   "bugs": "https://github.com/pekim/slack-wrapped/issues",
   "repository": {
     "type": "git",
-    "url": "ssh:do2.pekim.co.uk/home/mike/git/slack-wrapped.git"
+    "url": "https://github.com/pekim/slack-wrapped.git"
   },
   "dependencies": {
     "async": "1.0.0",
