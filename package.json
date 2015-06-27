@@ -7,14 +7,14 @@
   "bugs": "https://github.com/pekim/slack-wrapped/issues",
   "repository": {
     "type": "git",
-    "url": "ssh:do2.pekim.co.uk/home/mike/git/slack-wrapped.git"
+    "url": "https://github.com/pekim/slack-wrapped.git"
   },
   "dependencies": {
     "async": "1.0.0",
     "babel": "5.4.7",
-    "bluebird": "^2.9.25",
+    "bluebird": "2.9.25",
     "css": "2.2.0",
-    "glob": "^5.0.9",
+    "glob": "5.0.9",
     "hunspell-spellchecker": "1.0.1",
     "immutable": "3.7.3",
     "lodash": "3.9.2",
