@@ -20,7 +20,7 @@ function createAndRegisterSpellchecker(language) {
 }
 
 function registerSpellChecker(language, checker) {
-  webframe.setSpellCheckProvider(language, true, {
+  webframe.setSpellCheckProvider(language, false, {
     spellCheck: word => {
       return checker.check(word);
     }
