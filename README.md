@@ -14,6 +14,7 @@ Downloads are available on the [releases](https://github.com/pekim/slack-wrapped
 * Themes (only a proof of concept so far)
 * Open links in browser (or other system configured application)
 * Spell checking and suggestions
+  * spelling suggestions require that `hunspell` be installed and on the PATH
 * Tray icon, with unread message count
 * May work on Darwin and Windows (untested)
 
