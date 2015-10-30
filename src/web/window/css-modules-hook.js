@@ -30,10 +30,13 @@ hook({
   processCss: css => addStyleToHead(css),
 
   use: [
-    postcssModulesValues,
     postcssImport({
-      path: ['node_modules']
+      path: [
+        'node_modules',
+        'src/web/window/css'
+      ]
     }),
+    postcssModulesValues,
     postcssModulesExtractImports,
     postcssModulesLocalByDefault,
     postcssModulesScope({

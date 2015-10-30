@@ -1,0 +1,7 @@
+@import "normalize.css/normalize.css";
+
+html,
+body,
+:global(#react) {
+  height: 100%;
+}
