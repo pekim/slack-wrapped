@@ -33,7 +33,7 @@ hook({
     postcssImport({
       path: [
         'node_modules',
-        'src/web/window/css'
+        'src/web/css'
       ]
     }),
     postcssModulesValues,
