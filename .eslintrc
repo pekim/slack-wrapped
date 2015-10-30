@@ -1,0 +1,56 @@
+{
+  "extends": "eslint:recommended",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": true,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "restParams": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "unicodeCodePointEscapes": true,
+    "jsx": true
+  },
+
+  "rules": {
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "curly": [2, "all"],
+    "key-spacing": [2, { "align": "colon"}],
+    "new-cap": [2, {"capIsNewExceptions": ["List"]}],
+    "no-console": 0,
+    "no-param-reassign": [2, { "props": true }],
+    "no-use-before-define": [2, "nofunc"],
+    "no-var": 2,
+    "quotes": [2, "single", "avoid-escape"],
+    "semi": [2, "always"],
+    "space-before-blocks": [2, "always"],
+    "strict": [2, "global"],
+
+    "jsx-quotes": [2, "prefer-double"],
+    "react/jsx-no-undef": 2,
+    "react/jsx-uses-react": 2,
+    "react/jsx-uses-vars": 2,
+    "react/no-did-mount-set-state": 2,
+    "react/no-did-update-set-state": 2,
+    "react/no-multi-comp": 2,
+    "react/react-in-jsx-scope": 2,
+    "react/self-closing-comp": 2,
+    "react/wrap-multilines": 2
+  },
+
+  "plugins": [
+    "react"
+  ]
+}

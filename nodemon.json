@@ -1,0 +1,5 @@
+{
+  "exec": "electron .",
+  "ext": "css,js,json,html",
+  "watch": "src"
+}

@@ -1,0 +1,12 @@
+{
+  "stage": 1,
+
+  "plugins": [
+    "babel-plugin-module-alias"
+  ],
+
+  "extra": {
+    "module-alias": [
+      { "src": "./src/script", "expose": "app" }
+    ]
+  }}
