@@ -4,20 +4,20 @@ import BrowserWindow from 'browser-window';
 
 const isOSX = process.platform === 'darwin';
 
-function devTools() {
-	const win = BrowserWindow.getFocusedWindow();
+function windowAction(action) {
+	const window = BrowserWindow.getFocusedWindow();
 
-	if (win) {
-		win.toggleDevTools();
+	if (window) {
+		action(window);
 	}
 }
 
-function refresh() {
-	const win = BrowserWindow.getFocusedWindow();
+function devTools() {
+	windowAction(window => window.toggleDevTools());
+}
 
-	if (win) {
-		win.reloadIgnoringCache();
-	}
+function refresh() {
+	windowAction(window => window.reloadIgnoringCache());
 }
 
 function register() {
