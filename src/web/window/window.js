@@ -1,3 +1,9 @@
-import styles from './test.css';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-console.log(styles);
+import Root from 'web/component/root.js';
+
+ReactDOM.render(
+  <Root/>,
+  document.getElementById('react')
+);
