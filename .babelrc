@@ -8,6 +8,7 @@
 
   "extra": {
     "module-alias": [
-      { "src": "./src/script", "expose": "app" }
+      { "src": "./src/main", "expose": "main" },
+      { "src": "./src/web", "expose": "web" }
     ]
   }}

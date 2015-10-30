@@ -2,7 +2,7 @@
   "name": "slack-wrapped",
   "version": "2.0.0",
   "description": "Slack wrapped in electron.",
-  "main": "src/script/boot.js",
+  "main": "src/main/boot.js",
   "homepage": "https://github.com/pekim/slack-wrapped",
   "bugs": "https://github.com/pekim/slack-wrapped/issues",
   "repository": {

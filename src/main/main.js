@@ -17,7 +17,7 @@ app.on('ready', function() {
   mainWindow = new BrowserWindow({width: 800, height: 600});
 
   mainWindow.setMenu(null);
-  mainWindow.loadUrl('file://' + __dirname + '/index.html');
+  mainWindow.loadUrl('file://' + require.resolve('web/window/index.html'));
 
   mainWindow.on('closed', function() {
     mainWindow = null;
