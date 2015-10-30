@@ -37,10 +37,8 @@ function registerOrUnregister(globalShortcutRegisterOrUnregister) {
 }
 
 export default () => {
-	app.on('ready', () => {
-		register();
+	register();
 
-		app.on('browser-window-focus', register);
-		app.on('browser-window-blur', unregister);
-	});
+	app.on('browser-window-focus', register);
+	app.on('browser-window-blur', unregister);
 };
