@@ -2,8 +2,7 @@ import app from 'app';
 import BrowserWindow from 'browser-window';
 import bindDevtoolsToKeybindings from './devtools-keybindings';
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+// Keep a global reference of the window object, so it is not garbage collected.
 let mainWindow = null;
 
 app.on('window-all-closed', function() {

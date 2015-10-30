@@ -16,13 +16,12 @@ function generateScopedName(importName, filepath) {
 }
 
 function addStyleToHead(css) {
-  console.log(css);
-  // const headElement = document.querySelector('head');
-  // const styleElement = document.createElement('style');
-  //
-  // styleElement.type = 'text/css';
-  // styleElement.appendChild(document.createTextNode(css));
-  // headElement.appendChild(styleElement);
+  const headElement = document.querySelector('head');
+  const styleElement = document.createElement('style');
+
+  styleElement.type = 'text/css';
+  styleElement.appendChild(document.createTextNode(css));
+  headElement.appendChild(styleElement);
 
   return css;
 }
