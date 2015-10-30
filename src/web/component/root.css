@@ -1,6 +1,4 @@
-@import "colours.css";
-
 .root {
   height: 100%;
-  color: primary;
+  composes: text from "../css/text.css";
 }
