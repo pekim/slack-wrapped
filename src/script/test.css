@@ -1,3 +1,5 @@
+@value primary: green;
+
 .fred {
-  color: red;
+  color: primary;
 }

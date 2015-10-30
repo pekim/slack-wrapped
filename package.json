@@ -20,6 +20,7 @@
     "postcss-modules-extract-imports": "1.0.0",
     "postcss-modules-local-by-default": "1.0.0",
     "postcss-modules-scope": "1.0.0",
+    "postcss-modules-values": "1.1.0",
     "react": "0.14.1",
     "react-dom": "0.14.1",
     "react-redux": "4.0.0",

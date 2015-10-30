@@ -6,6 +6,7 @@ import postcssImport from 'postcss-import';
 import postcssModulesExtractImports from 'postcss-modules-extract-imports';
 import postcssModulesLocalByDefault from 'postcss-modules-local-by-default';
 import postcssModulesScope from 'postcss-modules-scope';
+import postcssModulesValues from 'postcss-modules-values';
 
 function generateScopedName(importName, filepath) {
   const basename = path.basename(filepath, '.css');
@@ -30,6 +31,7 @@ hook({
   processCss: css => addStyleToHead(css),
 
   use: [
+    postcssModulesValues,
     postcssImport({
       path: ['node_modules']
     }),
