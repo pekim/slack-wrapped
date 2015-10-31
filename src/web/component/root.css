@@ -1,4 +1,4 @@
 .root {
   height: 100%;
-  composes: text from "../css/text.css";
+  composes: text from "css/text.css";
 }
