@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Test from './test';
 import style from './root.css';
 
 export default ({}) => (
@@ -11,5 +12,7 @@ export default ({}) => (
     We are using node {process.versions.node},
     Chrome {process.versions.chrome},
     and Electron {process.versions.electron}.
+
+    <Test/>
   </div>
 );
