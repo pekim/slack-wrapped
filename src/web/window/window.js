@@ -13,7 +13,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Root/>
   </Provider>,
-  document.getElementById('react')
+  document.getElementById('content')
 );
 
 import { a1 } from 'web/ducks/duck-1';
