@@ -15,8 +15,3 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('content')
 );
-
-import { a1 } from 'web/ducks/duck-1';
-setInterval(() => {
-  store.dispatch(a1());
-}, 100);

@@ -2,7 +2,7 @@
 
 html,
 body,
-:global(#react) {
+:global(#content) {
   height: 100%;
 }
 
