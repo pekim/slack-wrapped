@@ -9,7 +9,6 @@ export function restore() {
   browserWindow.show();
 
   if (windowSize) {
-    console.log(windowSize.position, windowSize.size);
     browserWindow.setPosition(...windowSize.position);
     browserWindow.setSize(...windowSize.size);
 
