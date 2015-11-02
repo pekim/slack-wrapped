@@ -7,6 +7,7 @@ import style from './webview-slack.css';
 export default React.createClass({
   componentDidMount: function() {
     const webviewDOMNode = this.refs.webview;
+
     initialiseWebview(webviewDOMNode);
     // webviewDOMNode.addEventListener('dom-ready', function() {
     //   webviewDOMNode.openDevTools();

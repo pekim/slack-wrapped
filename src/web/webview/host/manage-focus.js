@@ -8,7 +8,6 @@ export default function manageFocus(webview) {
     webview.focus();
   });
 
-
   webview.addEventListener('did-finish-load', () => {
     webview.focus();
   });
