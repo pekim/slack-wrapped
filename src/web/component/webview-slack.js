@@ -8,9 +8,9 @@ export default React.createClass({
   componentDidMount: function() {
     const webviewDOMNode = this.refs.webview;
     initialiseWebview(webviewDOMNode);
-    webviewDOMNode.addEventListener('dom-ready', function() {
-      webviewDOMNode.openDevTools();
-    });
+    // webviewDOMNode.addEventListener('dom-ready', function() {
+    //   webviewDOMNode.openDevTools();
+    // });
   },
 
   render: function() {
