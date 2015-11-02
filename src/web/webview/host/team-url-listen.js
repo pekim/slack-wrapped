@@ -1,4 +1,4 @@
-const initialUrl = require('web/webview/initial-url');
+import initialUrl from 'web/webview/initial-url';
 
 export default function listen(webview) {
   webview.addEventListener('ipc-message', function(event) {

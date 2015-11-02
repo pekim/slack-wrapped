@@ -1,10 +1,10 @@
-const remote = require('remote');
+import remote from 'remote';
 const BrowserWindow = remote.require('browser-window');
 // const shell = require('shell');
 
 // const notifications = require('./notifications');
 // const unreadCount = require('./unread-count');
-const teamUrlListen = require('./team-url-listen');
+import teamUrlListen from './team-url-listen';
 // const theme = require('./theme');
 // const ContextMenu = appRequire('window/action/context-menu');
 // const preferenceTheme = appRequire('preference/theme');
