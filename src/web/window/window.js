@@ -2,10 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import * as windowState from './window-state';
 
 import Root from 'web/component/root.js';
 import ducks from 'web/ducks';
 import 'web/css/global.css';
+
+windowState.restore();
+windowState.saveRegularly();
 
 const store = createStore(ducks);
 
