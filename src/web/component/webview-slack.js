@@ -20,7 +20,7 @@ export default React.createClass({
         className={style.webview}
         src={getInitialUrl()}
         nodeintegration
-        preload="../webview/guest/preload-boot.js"
+        preload="../webview/guest/preload.js"
       />
     );
   }
