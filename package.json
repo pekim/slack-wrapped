@@ -35,7 +35,8 @@
     "copyfiles": "0.2.1",
     "eslint": "1.7.3",
     "eslint-plugin-react": "3.6.3",
-    "nodemon": "1.8.0"
+    "nodemon": "1.8.0",
+    "onchange": "2.0.0"
   },
   "scripts": {
     "babel": "babel --out-dir lib src",
