@@ -5,12 +5,11 @@ const BrowserWindow = remote.require('browser-window');
 // const notifications = require('./notifications');
 // const unreadCount = require('./unread-count');
 import teamUrlListen from './team-url-listen';
+import manageFocus from './manage-focus';
 // const theme = require('./theme');
 // const ContextMenu = appRequire('window/action/context-menu');
 // const preferenceTheme = appRequire('preference/theme');
 // const zoom = appRequire('window/action/zoom');
-
-const browserWindow = BrowserWindow.getAllWindows()[0];
 
 // const contextMenu = new ContextMenu();
 let slackWebview;
@@ -31,34 +30,32 @@ function initialise(webview) {
   //   }
   // });
   //
-  // browserWindow.on('focus', () => {
-  //   focus();
-  // });
 
   // notifications(slackWebview);
   // unreadCount.listen(slackWebview);
-  teamUrlListen(slackWebview);
+  manageFocus(webview);
+  teamUrlListen(webview);
 
   // slackWebview.addEventListener('did-start-loading', () => {
   //   slackWebview.setUserAgent(navigator.userAgent);
   // });
-  //
-  // slackWebview.addEventListener('did-finish-load', () => {
-  //   zoom.initialise();
-  //   focus();
-  //   theme.inject(slackWebview);
-  //   unreadCount.inject(slackWebview);
-  //
-  //   preferenceTheme.ee.on('change-active', () => {
-  //     theme.inject(slackWebview);
-  //   });
-  // });
-  //
+
+  slackWebview.addEventListener('did-finish-load', () => {
+    // zoom.initialise();
+    // theme.inject(slackWebview);
+    // unreadCount.inject(slackWebview);
+    //
+    // preferenceTheme.ee.on('change-active', () => {
+    //   theme.inject(slackWebview);
+    // });
+  });
+
   // slackWebview.addEventListener('new-window', (event) => {
   //   event.preventDefault();
   //   shell.openExternal(event.url);
   // });
 
+  const browserWindow = BrowserWindow.getAllWindows()[0];
   setInterval(() => {
     browserWindow.setTitle(slackWebview.getTitle());
   }, 500);
@@ -70,10 +67,6 @@ function initialise(webview) {
 //
 // function setZoomFactor(zoomFactor) {
 //   slackWebview.send('setZoomFactor', zoomFactor);
-// }
-
-// function focus() {
-//   slackWebview.focus();
 // }
 
 exports.initialise = initialise;
