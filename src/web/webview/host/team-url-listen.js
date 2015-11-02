@@ -1,9 +1,9 @@
-import initialUrl from 'web/webview/initial-url';
+import { set as setInitialUrl } from 'web/webview/initial-url';
 
 export default function listen(webview) {
   webview.addEventListener('ipc-message', function(event) {
     if (event.channel === 'teamUrl') {
-      initialUrl.set(event.args[0]);
+      setInitialUrl(event.args[0]);
     }
   });
 }

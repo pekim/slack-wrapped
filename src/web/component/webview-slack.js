@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { get as getIntialUrl } from 'web/webview/initial-url';
+import { get as getInitialUrl } from 'web/webview/initial-url';
 import { initialise as initialiseWebview } from 'web/webview/host/slack-webview';
 import style from './webview-slack.css';
 
@@ -18,7 +18,7 @@ export default React.createClass({
       <webview
         ref="webview"
         className={style.webview}
-        src={getIntialUrl()}
+        src={getInitialUrl()}
         nodeintegration
         preload="../webview/guest/preload-boot.js"
       />
