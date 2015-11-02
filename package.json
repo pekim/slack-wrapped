@@ -51,7 +51,7 @@
     "watch": "npm run babel:watch & npm run copy:watch & nodemon",
 
     "package": "npm run clean && npm run build && npm run package:electron && npm run package:tar",
-    "package:electron": "electron-packager . slack-wrapped --platform=linux --arch=x64 --version=0.34.2 --out dist/package --overwrite --ignore 'src|dist\/package'",
+    "package:electron": "electron-packager . slack-wrapped --platform=linux --arch=x64 --version=0.34.2 --out dist/package --overwrite --ignore 'src|dist\/package' --ignore=node_modules/\\.bin --prune",
     "package:tar": "tar -zcf dist/slack-wrapped-linux-x64 dist/package/slack-wrapped-linux-x64"
   },
   "keywords": [
