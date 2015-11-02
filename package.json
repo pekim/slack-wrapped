@@ -45,8 +45,8 @@
     "babel": "babel --out-dir lib src",
     "babel:watch": "babel --watch --out-dir lib src",
     "build": "npm run babel && npm run copy",
-    "copy": "copyfiles -u 1 src/**/*.css src/**/*.html src/**/*.png  lib",
-    "copy:watch": "onchange src/**/*.css src/**/*.html src/**/*.png -- npm run copy",
+    "copy": "copyfiles -u 1 'src/**/*.+(css|html|png)' lib",
+    "copy:watch": "onchange 'src/**/*.+(css|html|png)' -- npm run copy",
     "develop": "npm run clean && npm run build && npm run watch",
     "watch": "npm run babel:watch & npm run copy:watch & nodemon",
 
