@@ -1,5 +1,5 @@
 {
-  "exec": "electron build",
+  "exec": "electron lib",
   "ext": "css,js,json,html",
-  "watch": "build"
+  "watch": "lib"
 }
