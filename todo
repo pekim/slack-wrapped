@@ -1,13 +1,11 @@
-default dictionary from navigator.language
-
 select dictionary to use
   context menu options
   option to disable spell checking
 
 unzip release & test it
 
-better names of release files
-  include target platform
+use bumped version in release script
+  currently seems to use old version for asset file names
 
 only include runtime (not dev) dependencies in release archives
 

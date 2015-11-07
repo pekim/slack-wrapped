@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "css-modules-require-hook": "1.0.11",
+    "electron-localshortcut": "0.3.2",
     "electron-prebuilt": "0.34.2",
     "md5-hex": "1.1.0",
     "normalize.css": "3.0.3",
@@ -49,9 +50,8 @@
     "copy:watch": "onchange 'src/**/*.+(css|html|png)' -- npm run copy",
     "develop": "npm run clean && npm run build && npm run watch",
     "watch": "npm run babel:watch & npm run copy:watch & nodemon",
-
     "package": "npm run clean && npm run build && npm run package:electron && npm run package:tar",
-    "package:electron": "electron-packager . slack-wrapped --platform=linux --arch=x64 --version=0.34.2 --out dist/package --overwrite --ignore 'src|dist\/package' --ignore=node_modules/\\.bin --prune",
+    "package:electron": "electron-packager . slack-wrapped --platform=linux --arch=x64 --version=0.34.2 --out dist/package --overwrite --ignore 'src|dist/package' --ignore=node_modules/\\.bin --prune",
     "package:tar": "tar -zcf dist/slack-wrapped-linux-x64.tar.gz -C dist/package slack-wrapped-linux-x64"
   },
   "keywords": [
