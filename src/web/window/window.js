@@ -9,12 +9,12 @@ import Root from 'web/component/root.js';
 import ducks from 'web/ducks';
 import 'web/css/global.css';
 
-registerIpcListeners();
+const store = createStore(ducks);
+
+registerIpcListeners(store.dispatch);
 
 windowState.restore();
 windowState.saveRegularly();
-
-const store = createStore(ducks);
 
 ReactDOM.render(
   <Provider store={store}>

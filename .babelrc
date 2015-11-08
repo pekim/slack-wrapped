@@ -11,6 +11,7 @@
 
   "extra": {
     "module-alias": [
+      { "src": "./", "expose": "root" },
       { "src": "./src/main", "expose": "main" },
       { "src": "./src/web", "expose": "web" }
     ]

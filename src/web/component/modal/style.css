@@ -1,0 +1,36 @@
+.fillParent {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.modal {
+  composes: fillParent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  composes: fillParent;
+
+  background-color: black;
+  opacity: 0.5;
+}
+
+.content {
+  z-index: 1;
+  padding: 1em;
+  border: solid 2px hsl(0, 0%, 10%);
+  background-color: hsl(0, 0%, 95%);
+}
+
+.title {
+  border-bottom: solid 1px black;
+  text-align: center;
+  padding-bottom: 0.25em;
+  margin-bottom: 1em;
+}
