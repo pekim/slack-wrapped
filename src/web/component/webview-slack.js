@@ -6,12 +6,7 @@ import style from './webview-slack.css';
 
 export default class extends Component {
   componentDidMount() {
-    const webviewDOMNode = this.refs.webview;
-
-    initialiseWebview(webviewDOMNode);
-    // webviewDOMNode.addEventListener('dom-ready', function() {
-    //   webviewDOMNode.openDevTools();
-    // });
+    initialiseWebview(this.refs.webview);
   }
 
   render() {
