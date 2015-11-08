@@ -1,26 +1,31 @@
+F1 - help
+
+F2 - info
+
+SHIFT+F12 - toggle webview devtools
+
+show loading indicator _instead_ of webview while
+
+  https://github.com/atom/electron/blob/master/docs/api/web-view-tag.md
+    webview.addEventListener("did-start-loading", loadstart);
+    webview.addEventListener("did-stop-loading", loadstop);
+
+  hide (display: none;) webview until loaded
+    local css class
+
+auto-update
+  detect new version
+
+  inform user of new version
+    offer options
+      download now
+      remind later
+      go away!
+
+
 select dictionary to use
   context menu options
   option to disable spell checking
-
-unzip release & test it
-
-use bumped version in release script
-  currently seems to use old version for asset file names
-
-only include runtime (not dev) dependencies in release archives
-
-check for new releases
-  periodically
-  how inform user?
-
-move contents of this file to github issues
-  delete this file OR add to .gitignore
-
-spell checking
-
-review gulp code
-
-no overlay with theme selection dialog?
 
 link to github page in about dialog
   get url from package.json

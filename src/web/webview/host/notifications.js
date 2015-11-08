@@ -1,4 +1,3 @@
-'use strict';
 const slackBrand = appRequire('slack-brand');
 
 module.exports = function(webview) {

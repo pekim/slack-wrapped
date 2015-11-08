@@ -14,7 +14,7 @@ import manageFocus from './manage-focus';
 // const contextMenu = new ContextMenu();
 let slackWebview;
 
-function initialise(webview) {
+export function initialise(webview) {
   slackWebview = webview;
 
   // slackWebview.addEventListener('ipc-message', function(event) {
@@ -61,6 +61,14 @@ function initialise(webview) {
   }, 500);
 }
 
+export function toggleDevTools() {
+  if (slackWebview.isDevToolsOpened()) {
+    slackWebview.closeDevTools();
+  } else {
+    slackWebview.openDevTools();
+  }
+}
+
 // function replaceMisspelling(correctSpelling) {
 //   slackWebview.replaceMisspelling(correctSpelling);
 // }
@@ -69,7 +77,7 @@ function initialise(webview) {
 //   slackWebview.send('setZoomFactor', zoomFactor);
 // }
 
-exports.initialise = initialise;
+// exports.initialise = initialise;
 // exports.setZoomFactor = setZoomFactor;
 // exports.focus = focus;
 // exports.replaceMisspelling = replaceMisspelling;
