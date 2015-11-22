@@ -1,7 +1,7 @@
 import app from 'app';
 import BrowserWindow from 'browser-window';
 
-import bindDebugActionsToKeybindings from './debug-actions-keybindings';
+import { registerKeybindings } from './keybindings';
 import { getStickerImagePath } from 'web/slack-brand';
 
 // Keep a global reference of the window object, so it is not garbage collected.
@@ -25,5 +25,5 @@ app.on('ready', function() {
     mainWindow = null;
   });
 
-  bindDebugActionsToKeybindings(mainWindow);
+  registerKeybindings(mainWindow);
 });
